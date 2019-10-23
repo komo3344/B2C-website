@@ -3,13 +3,13 @@ import './Home.css'
 import Body from '../Body/Body'
 import Header from '../Header/Header'
 
-const Home = (type) => {
+const Home = (props) => {
   console.log('home page')
-  console.log(type)
+  console.log(props.type)
   return (
     <div>
       <div className='Header'>
-        <Header type={type}/>
+        <Header type={props.type}/>
       </div>
       <div className='Body'>
         <Body />

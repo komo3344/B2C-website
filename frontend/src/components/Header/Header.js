@@ -1,11 +1,10 @@
 import React from 'react';
 import './Header.css'
 
-const Header = (type) => {
-  console.log(type)
+const Header = (props) => {
   return (
     <div>
-      {type ? ('고객님 안녕하세요')
+      {props.type ? ('고객님 안녕하세요')
       : ('사장님 안녕하세요')
       }
       <div className='Nav'>
