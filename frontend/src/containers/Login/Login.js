@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Login.css'
 import Auth from '../Auth/Auth'
 
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -20,44 +21,48 @@ class Login extends Component {
     this.setState({
       login: true
     })
-    console.log(this.state)
   }
 
   action = () => {
-    this.setState({
-      type : false
-    })
-    console.log(this.state)
   }
 
   action2 = () => {
-    this.setState({
-      type : true
-    })
-    console.log(this.state)
+  }
+
+
+  action3 = () => {
   }
 
   render() {
-
+    let type = localStorage.getItem('type')
+    console.log(type)
     return (
       <div>
         {this.state.login 
         ? (
         <div>
-          <Auth login='asd' check_type={this.state.type} type={this.state.type}/>
+          <Auth handle_login_check={this.props.handle_login_check}/>
         </div>
         )
         : (
         <div className='Login'>
+          <h1>로그인</h1>
           <form onSubmit={this.handleSubmit} >
             <label>
-              Name:
+              아이디:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
-            <input type="submit" value="Submit" />
+            <br />
+            <label>
+              비밀번호 : 
+            <input type="password" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <br />
+            <input type="submit" value="로그인" />
           </form>
           <button onClick={this.action}>고객</button>
           <button onClick={this.action2}>사장</button>
+          <button onClick={this.props.handle_login_check}>test</button>
         </div>
         )
         }

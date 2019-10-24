@@ -1,0 +1,17 @@
+.div {
+  widows: 100%;
+}
+.store {
+  width: 70%;
+  float: left;
+  box-sizing: border-box;
+  background: darkolivegreen;
+  margin: 20px;
+}
+.info {
+  width: 24%;
+  margin: 20px;
+  float: right;
+  box-sizing: border-box;
+  background: skyblue;
+}

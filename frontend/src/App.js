@@ -1,14 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-
+import { Route, Switch } from 'react-router-dom'
 import './App.css';
+import {MainPage, StartPage, AuthPage, NotFound} from './page'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Link to='/Login' className='button'>시작하기</Link>
-      </header>
+    <div>
+      <Switch>
+        <Route exact path='/' component={StartPage} />
+        <Route path='/main' component={MainPage} />
+        <Route path='/auth' component={AuthPage} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }

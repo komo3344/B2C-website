@@ -1,23 +1,11 @@
 import React, { Component } from 'react'
-import Home from '../../components/Home/Home'
 
 class Auth extends Component {
-
-  constructor(props) {
-    super(props);
-    // initializes component state
-    this.state = {
-      login : props.login,
-      check : false,
-      type : props.type
-    };
-  }
   render() {
-    console.log('인증 페이지')
-    console.log(this.state.type)
+    console.log('인증완료')
     return (
       <div>
-        <Home type={this.state.type}/>
+        {this.props.handle_login_check()}
       </div>
     );
   }

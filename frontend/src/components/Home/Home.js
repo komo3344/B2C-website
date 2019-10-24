@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.css'
-import Body from '../Body/Body'
+import Body from '../../containers/Body/Body'
 import Header from '../Header/Header'
 
 const Home = (props) => {
