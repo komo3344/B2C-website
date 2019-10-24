@@ -33,7 +33,7 @@ class User(AbstractUser):
 
 class Store(models.Model):
     id = models.AutoField(primary_key=True)
-    u_id = models.ForeignKey(User, to_field='id', on_delete=models.CASCADE, null=True)
+    u_id = models.IntegerField(User, null=True, blank=True)
     store_name = models.CharField('가게 이름', max_length=30)
     business_number = models.IntegerField('사업자 번호')
 
