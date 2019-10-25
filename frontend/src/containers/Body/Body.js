@@ -22,7 +22,7 @@ class Body extends Component {
     return (
       <div className='box'>
         <div className='store'>
-        <StoreList data={this.state.store}/>
+        <StoreList data={this.state.store} display_form={this.props.display_form}/>
         </div>
         <div className='info'>
           <p>미구현</p>

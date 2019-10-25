@@ -10,9 +10,10 @@ class MainPage extends Component {
     displayed_form: 'home'
   }
 
-  display_form = form => { //화면 출력 폼 변경 함수
+  display_form = (form, id) => { //화면 출력 폼 변경 함수
     this.setState({
-      displayed_form: form
+      displayed_form: form,
+      store_id: id
     });
   };
 
@@ -24,7 +25,7 @@ class MainPage extends Component {
             <Header type={this.state.type} display_form={this.display_form}/>
           </div>
           <div className='container'>
-            <BodyContainer displayed_form={this.state.displayed_form} display_form={this.display_form}/>
+            <BodyContainer store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form}/>
           </div>
         </div>
       )

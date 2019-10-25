@@ -4,7 +4,7 @@ class DetailStore extends Component {
   render() {
     return (
       <div>
-        {this.props.id}
+        {this.props.store_id}
         가게 디테일
       </div>
     );

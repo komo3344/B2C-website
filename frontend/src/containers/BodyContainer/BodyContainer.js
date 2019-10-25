@@ -3,6 +3,7 @@ import Body from '../Body/Body'
 import ProfileContainer from '../ProfileContainer/ProfileContainer'
 import AddStore from '../AddStore/AddStore'
 import {Redirect} from 'react-router-dom'
+import DetailStore from "../DetailStore/DetailStore";
 
 class BodyContainer extends Component {
   render() { 
@@ -31,6 +32,11 @@ class BodyContainer extends Component {
     else if (this.props.displayed_form === 'addstore') {
       return(
         <AddStore display_form={this.props.display_form}/>
+      )
+    }
+    else if (this.props.displayed_form === 'store') {
+      return(
+        <DetailStore store_id={this.props.store_id}/>
       )
     }
     else {
