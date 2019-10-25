@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../../image/default.jpg'
+
 import './ProfileImage.css'
 
 const ProfileImage = () => {
