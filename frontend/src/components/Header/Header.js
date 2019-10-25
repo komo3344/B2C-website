@@ -1,6 +1,4 @@
 import React from 'react';
-import './Header.css'
-import { Link } from 'react-router-dom'
 
 const Header = (props) => {
   let x = ''
@@ -12,9 +10,9 @@ const Header = (props) => {
     <div>
       {x}
       <div className='Nav'>  
-        <button>홈</button>
-        <button>프로필</button>
-        <Link to='/auth'>로그아웃</Link>
+        <button onClick={() => props.display_form('home')}>홈</button>
+        <button onClick={() => props.display_form('profile')}>프로필</button>
+        <button onClick={() => props.display_form('logout')}>로그아웃</button>
       </div>
     </div>
   );

@@ -1,15 +1,22 @@
 body {
   font:14px/1.8 Arial, Helvetica, sans-serif;
 }
+
+div {
+  height: 100%;
+}
+
 .frame {
-  width: 99%;
   margin: 0 auto;
+  height: 100%;
+  width: 100%;
   border: 1px solid #aaa;
 }
 
 .header {
+  height: 35px;
   padding:40px 10px;
-  text-align: center;
+  text-align: right;
   background: #eee;
   margin-bottom: 20px;
 }
@@ -23,16 +30,18 @@ body {
 }
 .container {
   background: darkgreen;
-  height: 790px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 .nav {
+  height: 100%;
   float: left;
-  width: 300px;
+  width: 12%;
   background: #333;
   color: #fff;
-  margin-right: 50px;
-  height: 790px;
+  margin-right: 1%;
+  
 }
 .nav-list {
   list-style: none;
@@ -53,7 +62,7 @@ body {
 }
 .content {
   float: left;
-  width: 1400px;
+  width: 87%;
 }
 .footer {
   text-align: center;

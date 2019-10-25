@@ -12,7 +12,7 @@ class AuthPage extends Component {
     this.setState({
       login_check: true
     })
-    localStorage.setItem('type',this.state.type)
+    localStorage.setItem('type',this.state.type) // MainPage에서 type 이용
   }
 
   render() {
