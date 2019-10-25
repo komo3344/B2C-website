@@ -2,6 +2,7 @@ from rest_framework import generics
 from . import models
 from . import serializers
 from .permissions import IsOwnerOrReadOnly
+from .models import User
 
 
 class UserListView(generics.ListCreateAPIView):
@@ -9,9 +10,20 @@ class UserListView(generics.ListCreateAPIView):
     serializer_class = serializers.UserSerializer
 
 
-class StoreListView(generics.ListAPIView):
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
+class StoreListView(generics.ListCreateAPIView):
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
+
+
+# class MyStoreDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     permission_classes = [IsOwnerOrReadOnly]
+#     queryset = models.Store.objects.filter(u_id=User.id)
+#     serializer_class = serializers.StoreSerializer
 
 
 class StoreDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -20,7 +32,7 @@ class StoreDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.StoreSerializer
 
 
-class ReviewListView(generics.ListAPIView):
+class ReviewListView(generics.ListCreateAPIView):
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
 

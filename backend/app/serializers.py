@@ -6,11 +6,10 @@ from . models import User, Store, Review, Review_comment, \
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'role_profile', 'user_type', 'email')
+        fields = ('url', 'id', 'username', 'role_profile', 'user_type', 'email', 'stores')
 
 
 class StoreSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Store
         fields = ('url', 'id', 'u_id', 'store_name', 'business_number', 'title', 'content')
@@ -25,10 +24,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ReviewCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_comment
-        fields = ('url', 'id', 'r_id', 'comment', 'created_at')
+        fields = ('id', 'r_id', 'comment', 'created_at')
 
 
 class ReviewFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_file
-        fields = ('url', 'id', 'r_id', 'filename', 'original_name', 'image')
+        fields = ('id', 'r_id', 'filename', 'original_name', 'image')
