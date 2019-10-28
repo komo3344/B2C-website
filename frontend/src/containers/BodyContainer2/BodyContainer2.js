@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import Body from '../Body/Body'
 import ProfileContainer from '../ProfileContainer/ProfileContainer'
-import AddStore from '../AddStore/AddStore'
 import {Redirect} from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
 
-class BodyContainer extends Component {
+class BodyContainer2 extends Component {
   render() { 
     if (this.props.displayed_form === 'home') {
       return (
         <div >
           <div className='nav'>
             가게 list <br />
+            즐겨찾기 list <br />
+            별점 5점 가게 list <br />
           </div>
           <div className='content'>
             <Body type={this.props.type} display_form={this.props.display_form}/>
@@ -29,11 +30,6 @@ class BodyContainer extends Component {
         <Redirect to='/auth'/>
       )
     }
-    else if (this.props.displayed_form === 'addstore') {
-      return(
-        <AddStore display_form={this.props.display_form}/>
-      )
-    }
     else if (this.props.displayed_form === 'store') {
       return(
         <DetailStore store_id={this.props.store_id}/>
@@ -47,4 +43,4 @@ class BodyContainer extends Component {
   }
 };
 
-export default BodyContainer;
+export default BodyContainer2;

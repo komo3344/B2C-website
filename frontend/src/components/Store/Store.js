@@ -10,6 +10,7 @@ const Store = (props) => {
       <li onClick={() => props.display_form('store',store.id)}>{store.name}</li>
       <li>{store.content}</li>
       <p>__________________</p>
+      <p>{props.type}</p>
     </div>
   );
   return (

@@ -23,6 +23,8 @@ class DetailStore extends Component {
         <p>사업자 번호 : {this.state.store.business_number}</p>
         <p>가게 게시물 제목 : {this.state.store.title}</p>
         <p>가게 내용 : {this.state.store.content}</p>
+        <button>가게 정보 수정</button>
+        <button>가게 삭제</button>
       </div>
     );
   }

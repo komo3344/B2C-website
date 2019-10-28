@@ -19,17 +19,34 @@ class Body extends Component {
     ]
   }
   render() {
-    return (
-      <div className='box'>
-        <div className='store'>
-        <StoreList data={this.state.store} display_form={this.props.display_form}/>
+    if (this.props.type === 'C') {
+      return (
+        <div className='box'>
+          <div className='store'>
+          <StoreList type={this.props.type} data={this.state.store} display_form={this.props.display_form}/>
+          </div>
+          <div className='info'>
+            <p>추천 맛집</p>
+            <p>이벤트</p>
+          </div>
         </div>
-        <div className='info'>
-          <p>미구현</p>
-          <button onClick={() => this.props.display_form('addstore')}>가게 등록하기</button>
+      );
+    } else if (this.props.type === 'B') {
+      return (
+        <div className='box'>
+          <div className='store'>
+          <StoreList type={this.props.type} data={this.state.store} display_form={this.props.display_form}/>
+          </div>
+          <div className='info'>
+            <button onClick={() => this.props.display_form('addstore')}>가게 등록하기</button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>잘못된 유저 type 입니다</div>
+      )
+    }
   }
 };
 

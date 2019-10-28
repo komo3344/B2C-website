@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header } from '../../components'
 import { Redirect } from 'react-router-dom'
 import './MainPage.css'
-import { BodyContainer } from '../../containers';
+import { BodyContainer, BodyContainer2 } from '../../containers';
 
 class MainPage extends Component {
   state = {
@@ -25,7 +25,7 @@ class MainPage extends Component {
             <Header type={this.state.type} display_form={this.display_form}/>
           </div>
           <div className='container'>
-            <BodyContainer store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form}/>
+            <BodyContainer type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form}/>
           </div>
         </div>
       )
@@ -37,7 +37,7 @@ class MainPage extends Component {
             <Header type={this.state.type} display_form={this.display_form}/>
           </div>
           <div className='container'>
-            <BodyContainer display_form={this.state.display_form}/>
+            <BodyContainer2 type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form}/>
           </div>
         </div>
       )
