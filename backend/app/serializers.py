@@ -10,10 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class StoreSerializer(serializers.ModelSerializer):
+    current_user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Store
-        fields = ('url', 'id', 'u_id', 'store_name', 'business_number', 'title', 'content')
+        fields = ('url', 'id', 'u_id', 'store_name', 'business_number', 'title', 'content', 'image', 'current_user')
 
 
 class ReviewSerializer(serializers.ModelSerializer):

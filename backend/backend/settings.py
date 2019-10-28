@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 
     'corsheaders',
+
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -140,6 +142,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+
    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
     ),

@@ -25,7 +25,7 @@ class User(AbstractUser):
     user_type = models.PositiveSmallIntegerField('사용자 유형', choices=USER_TYPE, null=True, blank=True, default=1)
     email = models.EmailField('이메일', max_length=100, blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self): # u_id .=. username
         return str(self.username)
 
 
@@ -35,6 +35,7 @@ class Store(models.Model):
     business_number = models.IntegerField('사업자 번호')
     title = models.CharField(max_length=100)
     content = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to="store-image/%Y/%m/%d")
 
     def __str__(self):
         return str(self.store_name)

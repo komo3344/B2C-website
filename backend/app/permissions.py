@@ -15,7 +15,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # 쓰기 권한은 가게의 소유자에게만 부여함
-        if obj.u_id == request.user:
+        if obj.u_id == request.user.id:
             return True
 
 
