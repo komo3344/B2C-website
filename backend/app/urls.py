@@ -12,7 +12,9 @@ urlpatterns = [
     path('mystore/', views.MyStoreDetailView.as_view()),
     path('review/', views.ReviewListView.as_view()),
     path('review/<int:pk>', views.ReviewDetailView.as_view(), name='review-detail'),
-    path('review-comment/', views.ReviewCommentView.as_view(), name='review_comment-detail'),
+    path('review-comment/', views.ReviewCommentView.as_view()),
+    path('review-comment/<int:pk>', views.ReviewCommentDetailView.as_view(), name='review_comment-detail'),
+
 ]
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls')),
