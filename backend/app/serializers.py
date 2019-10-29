@@ -20,13 +20,13 @@ class StoreSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('url', 'id', 's_id', 'comment', 'created_at', 'star_score')
+        fields = ('url', 'id', 's_id', 'u_id', 'comment', 'created_at', 'star_score')
 
 
 class ReviewCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_comment
-        fields = ('url', 'id', 'r_id', 'comment', 'created_at')
+        fields = ('url', 'id', 'r_id', 'u_id', 'comment', 'created_at')
 
 
 class ReviewFileSerializer(serializers.ModelSerializer):
