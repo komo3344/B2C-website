@@ -36,7 +36,7 @@ class BodyContainer extends Component {
     }
     else if (this.props.displayed_form === 'store') {
       return(
-        <DetailStore store_id={this.props.store_id}/>
+        <DetailStore type={this.props.type} store_id={this.props.store_id}/>
       )
     }
     else {

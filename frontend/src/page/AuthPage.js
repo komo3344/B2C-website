@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom'
 class AuthPage extends Component {
   state = {
     login_check: false,
-    type : 'C'
+    type : 'B'
   }
 
   handle_login_check = () => {

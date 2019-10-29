@@ -15,7 +15,6 @@ class Body extends Component {
         name: '피자',
         content: '백종원 피자 맛집'
       }
-
     ]
   }
   render() {
