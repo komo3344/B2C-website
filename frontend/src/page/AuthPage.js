@@ -15,6 +15,10 @@ class AuthPage extends Component {
     localStorage.setItem('type',this.state.type) // MainPage에서 type 이용
   }
 
+  handle_login = (e, data) => {
+    
+  }
+
   render() {
     return (
       <div>

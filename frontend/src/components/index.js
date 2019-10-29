@@ -1,4 +1,3 @@
-import Home from './Home/Home';
 import Login from '../containers/Login/Login';
 import Header from './Header/Header'
 import Body from '../containers/Body/Body'
@@ -10,7 +9,6 @@ import Review from './Review/Review'
 export {
   Header,
   Body,
-  Home,
   Login,
   StoreList,
   ProfileImage,
