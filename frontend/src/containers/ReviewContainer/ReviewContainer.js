@@ -33,16 +33,58 @@ class ReviewContainer extends Component {
       }
     ]
   }
+  doDisplay = () => {
+    var con = document.getElementById("myDIV")
+    var con2 = document.getElementById("comment_button")
+    if(con.style.display==='none'){
+      con.style.display = 'block'
+    } else {
+      con.style.display = 'none'
+    }
+    if(con2.style.display==='block'){
+      con2.style.display = 'none'
+    } else {
+      con2.style.display = 'block'
+    }
+  }
+
+  doEditComment = () => {
+    var boss_comment = document.getElementById("boss_comment")
+    var buttons = document.getElementById("buttons")
+    var edit_comment = document.getElementById("edit_comment")
+    
+    if(edit_comment.style.display==='none'){
+      edit_comment.style.display = 'block'
+    } else {
+      edit_comment.style.display = 'none'
+    }
+
+    if(boss_comment.style.display==='block'){
+      boss_comment.style.display = 'none'
+    } else {
+      boss_comment.style.display = 'block'
+    }
+
+    if(buttons.style.display==='block'){
+      buttons.style.display = 'none'
+    } else {
+      buttons.style.display = 'block'
+    }
+    
+    
+  }
+
+  HandleReviewComment = () => {
+  }
 
 
   render() {
       return (
         <div>
           <h3>리뷰우</h3>
-          <Review data={this.state.Review}/>
+          <Review data={this.state.Review} type={this.props.type} doEdit={this.doEditComment} doDisplay={this.doDisplay} HandleReviewComment={this.HandleReviewComment}/>
         </div>
       );
-
   }
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Header.css'
 
 const Header = (props) => {
   let x = ''
@@ -7,7 +8,7 @@ const Header = (props) => {
   }
   else x = '고객님 안녕하세요 '
   return (
-    <div>
+    <div id='header'>
       {x}
       <div className='Nav'>  
         <button onClick={() => props.display_form('home')}>홈</button>

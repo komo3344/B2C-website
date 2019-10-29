@@ -1,4 +1,25 @@
 .Review {
   height: min-content;
-  
 }
+
+#myDIV {
+  display: none;
+}
+
+#comment_button {
+  display: block;
+}
+
+#boss_comment {
+  display: block;
+}
+
+
+#buttons {
+  display: block;
+}
+
+#edit_comment{
+  display: none;
+}
+
