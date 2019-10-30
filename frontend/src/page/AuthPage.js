@@ -17,11 +17,14 @@ class AuthPage extends Component {
   }
 
   handle_login = (e, data) => {
+    e.preventDefault()
     localStorage.setItem('type', this.state.type) // MainPage에서 type 이용
     console.log(data)
+    // this.handle_login_check()
   }
 
   handle_signup = (e, data) => {
+    e.preventDefault()
     this.display_form('login')
     console.log(data)
   }

@@ -6,6 +6,12 @@ import {Redirect} from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
 
 class BodyContainer extends Component {
+
+  handle_addstore = (e, data) => {
+    console.log(data)
+  }
+
+
   render() { 
     if (this.props.displayed_form === 'home') {
       return (
@@ -31,7 +37,7 @@ class BodyContainer extends Component {
     }
     else if (this.props.displayed_form === 'addstore') {
       return(
-        <AddStore display_form={this.props.display_form}/>
+        <AddStore display_form={this.props.display_form} handle_addstore={this.handle_addstore}/>
       )
     }
     else if (this.props.displayed_form === 'store') {

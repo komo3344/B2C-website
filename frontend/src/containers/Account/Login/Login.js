@@ -20,7 +20,7 @@ class Login extends Component {
     return (
       <div className='Login'>
         <h1>로그인</h1>
-        <form onSubmit={(e) => { this.props.handle_login(e, this.state) }}>
+        <form onSubmit={(e) => { this.props.handle_login(e, this.state) }} >
           <span>사장님으로 로그인하기</span>
           <input type='checkbox' onChange={this.handle_change} value='B' name='type' />
           <br />
@@ -34,7 +34,7 @@ class Login extends Component {
             <input type="password" name='password' value={this.state.password} onChange={this.handle_change} />
           </label>
           <br />
-          <input type="submit" value="로그인" />
+          <button type="submit">로그인 </button>
         </form>
         <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button>
       </div>

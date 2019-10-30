@@ -37,7 +37,7 @@ class Signup extends Component {
             <input type="password" name='password_check' value={this.state.password_check} onChange={this.handle_change} />
             <br />
             <br />
-            <input type="submit" value="등록" />
+            <button type="submit"> 등록 </button>
           </form>
         </div>
       </div>
