@@ -3,6 +3,7 @@ from rest_auth.registration.views import RegisterView
 from rest_framework import serializers
 from .models import User, Store, Review, Review_comment, \
     Review_file
+from django.contrib.auth.models import Group
 
 
 class MyRegistrationSerializer(RegisterSerializer):
@@ -12,10 +13,15 @@ class MyRegistrationSerializer(RegisterSerializer):
         if self.validated_data.get('Business'):
             u = User.objects.get(username=user.username)
             u.role_profile = 1
+            business_group = Group.objects.get(name='business')
+            business_group.user_set.add(u)
+            u.is_staff = True
             u.save()
         else:
             u = User.objects.get(username=user.username)
             u.role_profile = 2
+            customer_group = Group.objects.get(name='customer')
+            customer_group.user_set.add(u)
             u.save()
 
 
