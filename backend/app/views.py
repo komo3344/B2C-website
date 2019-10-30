@@ -57,3 +57,18 @@ class ReviewCommentDetailView(generics.RetrieveUpdateDestroyAPIView):    #- ì‚¬ì
     serializer_class = serializers.ReviewCommentSerializer
 
 
+class ReviewFileView(generics.ListCreateAPIView):
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = models.Review_comment.objects.all()
+    serializer_class = serializers.ReviewFileSerializer
+
+
+class ReviewFileDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = models.Review_comment.objects.all()
+    serializer_class = serializers.ReviewFileSerializer
+
+
+def login(request):
+    if request.method == 'POST':
+        role_profile = request.post.get('role_profile')

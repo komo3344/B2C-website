@@ -1,9 +1,37 @@
+from rest_auth.registration.serializers import RegisterSerializer
+from rest_auth.registration.views import RegisterView
 from rest_framework import serializers
-from . models import User, Store, Review, Review_comment, \
-                    Review_file
+from .models import User, Store, Review, Review_comment, \
+    Review_file
+
+
+class MyRegistrationSerializer(RegisterSerializer):
+    Business = serializers.BooleanField(required=False)
+
+    def custom_signup(self, request, user):
+        if self.validated_data.get('Business'):
+            u = User.objects.get(username=user.username)
+            u.role_profile = 1
+            u.save()
+        else:
+            u = User.objects.get(username=user.username)
+            u.role_profile = 2
+            u.save()
+
+
+class MyRegistrationView(RegisterView):
+    serializer_class = MyRegistrationSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        user = User.objects.filter(role_profile=1)
+        user.get_all_permissions()
+        user.save()
+
+        return user
+
     class Meta:
         model = User
         fields = ('url', 'id', 'username', 'role_profile', 'user_type', 'email')

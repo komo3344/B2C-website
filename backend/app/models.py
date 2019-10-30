@@ -27,8 +27,7 @@ class User(AbstractUser):
     def __str__(self): # u_id .=. username
         return str(self.username)
 
-    def get_group_permissions(self, obj=None):
-        pass
+
 class Store(models.Model):
     u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     store_name = models.CharField('가게 이름', max_length=30)
@@ -55,8 +54,8 @@ class Review(models.Model):
 
 class Review_file(models.Model):
     r_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    filename = models.CharField(max_length=100)
-    original_name = models.CharField(max_length=100)
+    filename = models.CharField(max_length=100, null=True)
+    original_name = models.CharField(max_length=100, null=True)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):

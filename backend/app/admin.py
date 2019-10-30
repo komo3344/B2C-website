@@ -45,7 +45,6 @@ class Review_comment_Admin(admin.ModelAdmin):
     list_display = ('r_id', 'u_id', 'created_at',)
 
 
-
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Store, StoreAdmin)
 admin.site.register(Review, ReviewAdmin)
