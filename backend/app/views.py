@@ -67,8 +67,3 @@ class ReviewFileDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewFileSerializer
-
-
-def login(request):
-    if request.method == 'POST':
-        role_profile = request.post.get('role_profile')

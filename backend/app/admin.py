@@ -11,7 +11,7 @@ class MyUserAdmin(UserAdmin):
     )
 
     list_display = ('username', 'email', 'user_type', 'role_profile')
-    readonly_fields = ['username', 'email', 'role_profile', 'user_type']    # 읽기전용
+    readonly_fields = ['username', 'email', 'role_profile', 'user_type']
 
 
 class StoreAdmin(admin.ModelAdmin):
@@ -20,9 +20,10 @@ class StoreAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs.all()
         return qs.filter(u_id=request.user)
+
     list_display = ('store_name', 'u_id', 'business_number',)
-    search_fields = ('store_name', 'businness_number')
-    readonly_fields = ['u_id', 'store_name', 'business_number']
+    search_fields = ('store_name', 'business_number')
+    readonly_fields = ['u_id', 'store_name', 'business_number', ]
 
 
 class ReviewAdmin(admin.ModelAdmin):
@@ -42,7 +43,9 @@ class Review_comment_Admin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs.all()
         return qs.filter(u_id=request.user)
+
     list_display = ('r_id', 'u_id', 'created_at',)
+    readonly_fields = ['r_id', 'u_id']
 
 
 admin.site.register(User, MyUserAdmin)

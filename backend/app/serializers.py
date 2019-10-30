@@ -30,14 +30,6 @@ class MyRegistrationView(RegisterView):
 
 
 class UserSerializer(serializers.ModelSerializer):
-
-    def create(self, validated_data):
-        user = User.objects.filter(role_profile=1)
-        user.get_all_permissions()
-        user.save()
-
-        return user
-
     class Meta:
         model = User
         fields = ('url', 'id', 'username', 'role_profile', 'user_type', 'email')
