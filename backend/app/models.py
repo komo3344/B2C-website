@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Permission
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -23,7 +23,6 @@ class User(AbstractUser):
     # 기본 정보
     role_profile = models.PositiveSmallIntegerField('BC 유형', choices=ROLE_CHOICES, null=True, blank=True)
     user_type = models.PositiveSmallIntegerField('사용자 유형', choices=USER_TYPE, null=True, blank=True, default=1)
-    email = models.EmailField('이메일', max_length=100, blank=True, null=True)
 
     def __str__(self): # u_id .=. username
         return str(self.username)
@@ -43,24 +42,31 @@ class Store(models.Model):
 
 class Review(models.Model):
     s_id = models.ForeignKey(Store, on_delete=models.CASCADE, null=True)
+    u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comment = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    star_score = models.IntegerField(default=1, validators=[MinValueValidator(1),
+    star_score = models.IntegerField('별점', default=1, validators=[MinValueValidator(1),
                                                             MaxValueValidator(5)])
+
+    def __str__(self):
+        return str(self.s_id)
 
 
 class Review_file(models.Model):
     r_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    filename = models.CharField(max_length=100)
-    original_name = models.CharField(max_length=100)
+    filename = models.CharField(max_length=100, null=True)
+    original_name = models.CharField(max_length=100, null=True)
     image = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.r_id)
 
 
 class Review_comment(models.Model):
     r_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    # u_id = User.id
-    # u_id = models.ForeignKey(User, to_field='id', on_delete=models.CASCADE, null=True)
-    u_id = models.IntegerField(User, null=True, blank=True)
+    u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)  # owner
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.r_id)
