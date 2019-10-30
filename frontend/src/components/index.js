@@ -1,4 +1,4 @@
-import Login from '../containers/Login/Login';
+import Login from '../containers/Account/Login/Login';
 import Header from './Header/Header'
 import Body from '../containers/Body/Body'
 import StoreList from './StoreList/StoreList'

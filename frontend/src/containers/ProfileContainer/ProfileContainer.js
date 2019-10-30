@@ -8,6 +8,7 @@ class ProfileContainer extends Component {
     is_first: true,
     introduce: '',
     store: [ //사장님만 가지고 있는 가게 list를 불러와야함 //고객님은 즐겨찾는 가게 list를 불러와야함
+             //const mystore =   'http://127.0.0.1:8000/mystore/';, 즐겨찾기는 아직
       {
         id: 1,
         name: '갈비탕',

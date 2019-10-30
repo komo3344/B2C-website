@@ -4,7 +4,7 @@ import './Body.css'
 
 class Body extends Component {
   state = {
-    store : [ //모든 가게 list 를 가져와야함
+    store : [ //모든 가게 list 를 가져와야함 const storelist = 'http://127.0.0.1:8000/store/';
       {
         id: 1,
         name: '갈비탕',
