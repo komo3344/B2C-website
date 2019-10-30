@@ -9,6 +9,9 @@ const Header = (props) => {
   else x = '고객님 안녕하세요 '
   return (
     <div id='header'>
+      <div>
+        {props.username}
+      </div>
       {x}
       <div className='Nav'>  
         <button onClick={() => props.display_form('home')}>홈</button>

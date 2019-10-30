@@ -79,9 +79,6 @@ const Review = (props) => {
   } else {
     list = '잘못 된 타입 입니다'
   }
-
-  console.log(props)
-  console.log(list)
   return (
     <div>
       {list}

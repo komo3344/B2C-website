@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
 
 class BodyContainer2 extends Component {
+
   render() { 
     if (this.props.displayed_form === 'home') {
       return (
@@ -26,6 +27,9 @@ class BodyContainer2 extends Component {
       )
     }
     else if (this.props.displayed_form === 'logout') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('id');
+      localStorage.removeItem('user_id');
       return(
         <Redirect to='/auth'/>
       )

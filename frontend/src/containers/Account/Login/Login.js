@@ -21,9 +21,6 @@ class Login extends Component {
       <div className='Login'>
         <h1>로그인</h1>
         <form onSubmit={(e) => { this.props.handle_login(e, this.state) }} >
-          <span>사장님으로 로그인하기</span>
-          <input type='checkbox' onChange={this.handle_change} value='B' name='type' />
-          <br />
           <label>
             아이디:
           <input type="text" name='id' value={this.state.id} onChange={this.handle_change} />

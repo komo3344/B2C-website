@@ -11,24 +11,13 @@ class Body extends Component {
   componentDidMount () {
     axios.get("http://127.0.0.1:8000/store")
     .then(res =>{
-      console.log(res.data)
       this.setState({
         store : res.data
       })
-      console.log(this.state)
-    }
-    )
+    }).catch( e => {
+      console.log(e)
+    })
   }
-
-  // "url": "http://127.0.0.1:8000/store/1",
-  //       "id": 1,
-  //       "u_id": 1,
-  //       "store_name": "aaaaa",
-  //       "business_number": 2314213,
-  //       "title": "asda",
-  //       "content": "asdasd",
-  //       "image": null,
-  //       "current_user": null
 
   render() {
     if (this.props.type === 'C') {

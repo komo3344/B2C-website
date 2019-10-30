@@ -2,16 +2,24 @@ import React, { Component } from 'react';
 import logo from '../../image/ckicken.jpg'
 import ReviewContainer from '../ReviewContainer/ReviewContainer'
 import './DetailStore.css'
+import axios from 'axios'
 
 class DetailStore extends Component {
-  state = { //받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
-    store: {
-      store_name: '치킨 치이킨',
-      business_number: 1126254879534,
-      title: '시켜먹으면 후회안하는',
-      content: '후라이드 만오천원 양념 만칠천원',
-      img: '/ckicken.jpg',
-    }
+  state = {
+    store: null//받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
+  }
+  componentDidMount() {
+    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`)
+    .then(res =>{
+      console.log(this.state)
+      this.setState({
+        store : res.data
+      })
+      console.log(this.state)
+      console.log(this.state.store.store_name)
+    }).catch (e => {
+      console.log(e)
+    })
   }
 
   handleSubmit = (e) => {
@@ -50,9 +58,9 @@ class DetailStore extends Component {
           유저 타입{this.props.type}
           <br />
           <img src={logo} alt='가게 사진' />
-          <p>가게 이름 : {this.state.store.store_name}</p>
-          <p>가게 게시물 제목 : {this.state.store.title}</p>
-          <p>가게 내용 : {this.state.store.content}</p>
+          <p>가게 이름 : {this.state.aaa}</p>
+          <p>가게 게시물 제목 : {this.state.title}</p>
+          <p>가게 내용 : {this.state.content}</p>
           <form onSubmit={this.handleSubmit}>
           <input type='number' name='star_score' min="1" max="5" placeholder='별점'></input>
             <textarea rows='8' cols='60' placeholder='댓글 내용을 작성해주세요!'></textarea>
@@ -72,17 +80,17 @@ class DetailStore extends Component {
           <img src={logo} alt='가게 사진' />
           <button>사진 바꾸기</button>
           <div id='store_info'>
-            <p>가게 이름 : {this.state.store.store_name}</p>
-            <p>사업자 번호 : {this.state.store.business_number}</p>
-            <p>가게 게시물 제목 : {this.state.store.title}</p>
-            <p>가게 내용 : {this.state.store.content}</p>
+            <p>가게 이름 : {this.state.store_name}</p>
+            <p>사업자 번호 : {this.state.business_number}</p>
+            <p>가게 게시물 제목 : {this.state.title}</p>
+            <p>가게 내용 : {this.state.content}</p>
           </div>
           <div id='edit_store_info'>
             <form onSubmit={this.handleSubmit2}>
-              가게 이름 : <input type='text' name='store_name' value={this.state.store.store_name}></input><br />
-              사업자 번호 : <input type='number' name='business_number' value={this.state.store.business_number}></input><br />
-              가게 게시물 제목 : <input type='text' name='title' value={this.state.store.title}></input><br />
-              가게 내용 : <textarea name='content'>{this.state.store.content}</textarea><br />
+              가게 이름 : <input type='text' name='store_name' value={this.state.store_name}></input><br />
+              사업자 번호 : <input type='number' name='business_number' value={this.state.business_number}></input><br />
+              가게 게시물 제목 : <input type='text' name='title' value={this.state.title}></input><br />
+              가게 내용 : <textarea name='content'>{this.state.content}</textarea><br />
               <button type='submit'>수정하기</button>
             </form>
           </div>
