@@ -20,7 +20,7 @@ class AuthPage extends Component {
     e.preventDefault()
     localStorage.setItem('type', this.state.type) // MainPage에서 type 이용
     console.log(data)
-    // this.handle_login_check()
+    this.handle_login_check()
   }
 
   handle_signup = (e, data) => {

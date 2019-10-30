@@ -7,7 +7,8 @@ const Store = (props) => {
   const list = storeList.map((store) =>
     <div key={store.id} id='store'>
       
-      <li onClick={() => props.display_form('store',store.id)}>{store.name}</li>
+      <li onClick={() => props.display_form('store',store.id)}>{store.store_name}</li>
+      <li>{store.title}</li>
       <li>{store.content}</li>
       <p>__________________</p>
       

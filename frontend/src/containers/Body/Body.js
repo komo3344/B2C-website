@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
 import { StoreList } from '../../components'
 import './Body.css'
+import axios from "axios";
 
 class Body extends Component {
   state = {
-    store : [ //모든 가게 list 를 가져와야함 const storelist = 'http://127.0.0.1:8000/store/';
-      {
-        id: 1,
-        name: '갈비탕',
-        content: '9시 부터 영업'
-      },
-      {
-        id: 2,
-        name: '피자',
-        content: '백종원 피자 맛집'
-      }
-    ]
+    store : [] //모든 가게 list 를 가져와야함 const storelist = 'http://127.0.0.1:8000/store/';
   }
+
+  componentDidMount () {
+    axios.get("http://127.0.0.1:8000/store")
+    .then(res =>{
+      console.log(res.data)
+      this.setState({
+        store : res.data
+      })
+      console.log(this.state)
+    }
+    )
+  }
+
+  // "url": "http://127.0.0.1:8000/store/1",
+  //       "id": 1,
+  //       "u_id": 1,
+  //       "store_name": "aaaaa",
+  //       "business_number": 2314213,
+  //       "title": "asda",
+  //       "content": "asdasd",
+  //       "image": null,
+  //       "current_user": null
+
   render() {
     if (this.props.type === 'C') {
       return (

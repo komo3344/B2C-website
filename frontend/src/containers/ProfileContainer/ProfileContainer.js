@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StoreList, ProfileImage, ProfileIntroduce } from '../../components';
 import './ProfileContainer.css'
+import axios from "axios";
 
 class ProfileContainer extends Component {
   state = {
@@ -9,17 +10,20 @@ class ProfileContainer extends Component {
     introduce: '',
     store: [ //사장님만 가지고 있는 가게 list를 불러와야함 //고객님은 즐겨찾는 가게 list를 불러와야함
              //const mystore =   'http://127.0.0.1:8000/mystore/';, 즐겨찾기는 아직
-      {
-        id: 1,
-        name: '갈비탕',
-        content: '9시 부터 영업'
-      },
-      {
-        id: 2,
-        name: '피자',
-        content: '백종원 피자 맛집'
-      }
+      
     ]
+  }
+
+  componentDidMount() {
+    axios.get("http://127.0.0.1:8000/mystore")
+    .then(res =>{
+      console.log(res.data)
+      this.setState({
+        store : res.data
+      })
+      console.log(this.state)
+    }
+    )
   }
 
   Profile_edit = () => {
