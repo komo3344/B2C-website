@@ -20,6 +20,7 @@ urlpatterns = [
     path('review-comment/<int:pk>', views.ReviewCommentDetail.as_view(), name='review_comment-detail'),
 
     path('review/store/<int:s_id>', views.StoreReviewList.as_view()),  # 해당가게의 댓글
+    path('review-comment/store/<int:s_id>', views.StoreReviewCommentList.as_view()),  # 해당가게의 대댓글
 
     path('review-file/', views.ReviewFile.as_view()),
     path('review-file/<int:pk>', views.ReviewFileDetail.as_view(), name='review_file-detail'),

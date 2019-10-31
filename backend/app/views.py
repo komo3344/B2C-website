@@ -50,6 +50,17 @@ class StoreReviewList(generics.ListAPIView):   # 해당가게 댓글 리스트
         return review
 
 
+class StoreReviewCommentList(generics.ListAPIView):   # 해당가게 대댓글 리스트
+    queryset = models.Review.objects.all()
+    serializer_class = serializers.ReviewSerializer
+    lookup_url_kwarg = 's_id'
+
+    def get_queryset(self):
+        s_id = self.kwargs.get(self.lookup_url_kwarg)  # api 요청시 value 값 받음 - /review/store/<value>
+        review_comment = models.Review_comment.objects.filter(s_id=s_id)
+        return review_comment
+
+
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):  # 댓글 수정
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review.objects.all()

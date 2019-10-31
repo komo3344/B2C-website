@@ -45,7 +45,7 @@ class Review_comment_Admin(admin.ModelAdmin):
         return qs.filter(u_id=request.user)
 
     list_display = ('r_id', 'u_id', 'created_at',)
-    readonly_fields = ['r_id', 'u_id']
+    readonly_fields = ['r_id', 'u_id', 's_id']
 
 
 admin.site.register(User, MyUserAdmin)

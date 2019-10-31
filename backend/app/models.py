@@ -63,6 +63,7 @@ class Review_file(models.Model):
 
 
 class Review_comment(models.Model):
+    s_id = models.ForeignKey(Store, on_delete=models.CASCADE, null=True)
     r_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
     u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)  # owner
     comment = models.TextField()
