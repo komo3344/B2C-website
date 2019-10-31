@@ -6,6 +6,7 @@ import DetailStore from "../DetailStore/DetailStore";
 
 class BodyContainer2 extends Component {
 
+
   render() { 
     if (this.props.displayed_form === 'home') {
       return (
@@ -28,7 +29,7 @@ class BodyContainer2 extends Component {
     }
     else if (this.props.displayed_form === 'logout') {
       localStorage.removeItem('token');
-      localStorage.removeItem('id');
+      localStorage.removeItem('username');
       localStorage.removeItem('user_id');
       return(
         <Redirect to='/auth'/>
@@ -36,7 +37,7 @@ class BodyContainer2 extends Component {
     }
     else if (this.props.displayed_form === 'store') {
       return(
-        <DetailStore type={this.props.type} store_id={this.props.store_id}/>
+        <DetailStore type={this.props.type} store_id={this.props.store_id} handle_review={this.handle_review} check={this.check}/>
       )
     }
     else {

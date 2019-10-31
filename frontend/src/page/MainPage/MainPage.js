@@ -3,12 +3,13 @@ import { Header } from '../../components'
 import { Redirect } from 'react-router-dom'
 import './MainPage.css'
 import { BodyContainer, BodyContainer2 } from '../../containers';
+import axios from 'axios';
 
 class MainPage extends Component {
   state = {
     type: localStorage.getItem('type'), // type 은 AuthPage에서 저장
     displayed_form: 'home',
-    username: localStorage.getItem('username'),
+    username: '',
   }
 
   display_form = (form, id) => { //화면 출력 폼 변경 함수
@@ -19,17 +20,17 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    // console.log('인증')
-    // fetch(`http://127.0.0.1:8000/user/${localStorage.getItem('user_id')}`, {
-    //   headers: {
-    //     Authorization: `JWT ${localStorage.getItem('token')}`
-    //   }
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //   }).catch(e => 
-    //     console.log(e)
-    //   );
+    axios.get(`http://127.0.0.1:8000/user/${localStorage.getItem('user_id')}`,{
+      headers:{
+        Authorization: `JWT ${localStorage.getItem('token')}`
+      }
+    }).then(
+      res => {
+        this.setState({
+          username: res.data.username
+        })
+      }
+    )
   }
 
   render() {

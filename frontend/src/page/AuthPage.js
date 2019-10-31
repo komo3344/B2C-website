@@ -6,7 +6,7 @@ import axios from "axios";
 class AuthPage extends Component {
   state = {
     login_check: false,
-    type: 'C',
+    type: 'B',
     displayed_form: 'login'
   }
 
@@ -31,8 +31,6 @@ class AuthPage extends Component {
         localStorage.setItem('type', 'C')
       }
       else localStorage.setItem('type', 'A')
-      console.log(res.data.user.username)
-      localStorage.setItem('username', res.data.user.username);
       localStorage.setItem('user_id', res.data.user.id);
       this.handle_login_check()
     }

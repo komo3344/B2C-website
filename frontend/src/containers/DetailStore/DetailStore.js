@@ -8,21 +8,16 @@ class DetailStore extends Component {
   state = {
     store: []//받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
   }
+
   componentDidMount() {
     axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`)
       .then(res => {
-        console.log(this.state)
         this.setState({
           store: res.data,
         })
-        console.log(this.state)
-        console.log(this.state.store.store_name)
       }).catch(e => {
         console.log(e)
       })
-  }
-
-  handleSubmit = (e) => {
   }
 
   storeEdit = () => {
@@ -53,6 +48,8 @@ class DetailStore extends Component {
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
+          <button onClick={this.check}>test</button>
+          <h1>{this.state.change && <span>aaaaaa</span>}</h1>
           가게 번호{this.props.store_id}
           <br />
           유저 타입{this.props.type}
@@ -61,13 +58,7 @@ class DetailStore extends Component {
           <p>가게 이름 : {this.state.store.store_name}</p>
           <p>가게 게시물 제목 : {this.state.store.title}</p>
           <p>가게 내용 : {this.state.store.content}</p>
-          <form onSubmit={this.handleSubmit}>
-            <input type='number' name='star_score' min="1" max="5" placeholder='별점'></input>
-            <textarea rows='8' cols='60' placeholder='댓글 내용을 작성해주세요!'></textarea>
-            <input type='file'></input>
-            <button type='submit'>작성하기</button>
-          </form>
-          <ReviewContainer type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
+          <ReviewContainer Review={this.state.Review} type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>
       );
     } else if (this.props.type === 'B') {

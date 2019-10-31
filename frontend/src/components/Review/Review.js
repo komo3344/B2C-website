@@ -8,7 +8,7 @@ const Review = (props) => {
   if (props.type === 'C') {
     list = ReviewList.map((Review) =>
       <div key={Review.id} className='Review'>
-        <li>작성자 : {Review.author}
+        <li>작성자 : {Review.u_id}
           {Review.file_check && (
             <ul>
               <img width='300px' height='100px' src={logo} alt='프로필사진못찾으면 뜨는 글' />
@@ -18,6 +18,7 @@ const Review = (props) => {
             <li>코멘트 : {Review.comment}</li>
             <li>평점 : {Review.star_score}</li>
             <li>작성일자 : {Review.created_at}</li>
+            <button onClick={(e) => {props.deleteComment(e,Review.id)}}>삭제하기</button>
 
             {Review.comment_ckeck && (
               <ul>
@@ -34,7 +35,7 @@ const Review = (props) => {
   } else if (props.type === 'B') {
     list = ReviewList.map((Review) =>
       <div key={Review.id} className='Review'>
-        <li>작성자 : {Review.author}
+        <li>작성자 : {Review.u_id}
           {Review.file_check && (
             <ul>
               <img width='300px' height='100px' src={logo} alt='프로필사진못찾으면 뜨는 글' />

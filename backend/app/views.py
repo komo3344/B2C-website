@@ -40,7 +40,7 @@ class ReviewListView(generics.ListCreateAPIView):   # 댓글 리스트
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):  # 댓글 수정
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
 

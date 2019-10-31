@@ -46,7 +46,7 @@ class BodyContainer extends Component {
     }
     else if (this.props.displayed_form === 'logout') {
       localStorage.removeItem('token');
-      localStorage.removeItem('id');
+      localStorage.removeItem('username');
       localStorage.removeItem('user_id');
       return (
         <Redirect to='/auth' />

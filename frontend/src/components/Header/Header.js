@@ -10,7 +10,7 @@ const Header = (props) => {
   return (
     <div id='header'>
       <div>
-        {props.username}
+        접속중인 계정 : {props.username}
       </div>
       {x}
       <div className='Nav'>  
