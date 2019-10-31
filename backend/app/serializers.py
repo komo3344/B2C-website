@@ -52,7 +52,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ReviewCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_comment
-        fields = ('url', 'id', 'r_id', 'u_id', 'comment', 'created_at')
+        fields = ('url', 'id', 's_id', 'r_id', 'u_id', 'comment', 'created_at')
 
 
 class ReviewFileSerializer(serializers.ModelSerializer):

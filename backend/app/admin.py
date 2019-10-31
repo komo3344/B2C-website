@@ -21,9 +21,22 @@ class StoreAdmin(admin.ModelAdmin):
             return qs.all()
         return qs.filter(u_id=request.user)
 
-    list_display = ('store_name', 'u_id', 'business_number',)
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_staff:
+            if request.user.is_superuser:
+                return []
+            else:
+                return [f.name for f in self.model._meta.fields]
+
+    def reviews_list(self, obj):
+        reviews = Review.objects.filter(s_id=obj)
+        return reviews.count()
+
+    reviews_list.short_description = '리뷰 수'
+    list_display = ('store_name', 'u_id', 'business_number', 'reviews_list')
     search_fields = ('store_name', 'business_number')
     readonly_fields = ['u_id', 'store_name', 'business_number', ]
+    admin.ModelAdmin.short_description = "Review"
 
 
 class ReviewAdmin(admin.ModelAdmin):
@@ -32,6 +45,13 @@ class ReviewAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs.all()
         return qs.filter(u_id=request.user)
+
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_staff:
+            if request.user.is_superuser:
+                return []
+            else:
+                return [f.name for f in self.model._meta.fields]
     list_display = ('s_id', 'u_id', 'star_score', 'created_at',)
     search_fields = ('s_id', 'u_id', 'star_score', 'created_at',)
     readonly_fields = ['s_id', 'u_id', 'star_score', 'created_at', ]
@@ -44,6 +64,12 @@ class Review_comment_Admin(admin.ModelAdmin):
             return qs.all()
         return qs.filter(u_id=request.user)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_staff:
+            if request.user.is_superuser:
+                return []
+            else:
+                return [f.name for f in self.model._meta.fields]
     list_display = ('r_id', 'u_id', 'created_at',)
     readonly_fields = ['r_id', 'u_id', 's_id']
 
