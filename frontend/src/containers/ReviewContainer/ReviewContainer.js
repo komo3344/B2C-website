@@ -5,7 +5,9 @@ import Axios from 'axios';
 
 class ReviewContainer extends Component {
   state = { // this.props.store_id 를 가지고 해당 게시물의 리뷰 데이터 (Review, Review_file, Review_comment 데이터를 전부 불러옴)
-    Review: [] //리뷰 하드코딩
+    Review: [], //리뷰 하드코딩
+    re: [],
+    re_re: []
   }
 
   handle_change = e => {
@@ -25,13 +27,13 @@ class ReviewContainer extends Component {
       star_score: star_score,
       s_id: this.props.store_id,
       u_id: localStorage.getItem('user_id')
-    }).then(res =>{
+    }).then(res => {
       this.get_review()
-    }).catch(e => {console.log(e)})
+    }).catch(e => { console.log(e) })
   }
 
   get_review = () => {
-    Axios.get('http://127.0.0.1:8000/review/')
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`)
       .then(
         res => {
           this.setState({
@@ -41,12 +43,23 @@ class ReviewContainer extends Component {
       )
   }
 
+
+
   componentDidMount() {
-    Axios.get('http://127.0.0.1:8000/review/')
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`)
       .then(
         res => {
           this.setState({
-            Review: res.data
+            Review: res.data,
+            re: res.data
+          })
+        }
+      )
+    Axios.get(`http://127.0.0.1:8000/review-comment`)
+      .then(
+        res => {
+          this.setState({
+            re_re: res.data
           })
         }
       )
@@ -104,20 +117,28 @@ class ReviewContainer extends Component {
   HandleReviewComment = () => {
   }
 
-
   render() {
     return (
       <div>
         <h3>리뷰우</h3>
         {this.props.type === 'C' &&
-        <form onSubmit={(e) => {this.handle_review(e, this.state.comment, this.state.star_score)}}>
-          <input type='number' onChange={this.handle_change} name='star_score' min="1" max="5" placeholder='별점'></input>
-          <textarea rows='8' onChange={this.handle_change} cols='60' placeholder='댓글 내용을 작성해주세요!' name='comment'></textarea>
-          <input type='file'></input>
-          <button type='submit'>작성하기</button>
-        </form>
+          <form onSubmit={(e) => { this.handle_review(e, this.state.comment, this.state.star_score) }}>
+            <input type='number' onChange={this.handle_change} name='star_score' min="1" max="5" placeholder='별점'></input>
+            <textarea rows='8' onChange={this.handle_change} cols='60' placeholder='댓글 내용을 작성해주세요!' name='comment'></textarea>
+            <input type='file'></input>
+            <button type='submit'>작성하기</button>
+          </form>
         }
-        <Review data={this.state.Review} type={this.props.type} doEdit={this.doEditComment} doDisplay={this.doDisplay} HandleReviewComment={this.HandleReviewComment} deleteComment={this.deleteComment} />
+        <Review
+          data={this.state.Review}
+          type={this.props.type}
+          doEdit={this.doEditComment}
+          doDisplay={this.doDisplay}
+          HandleReviewComment={this.HandleReviewComment}
+          deleteComment={this.deleteComment}
+          re={this.state.re}
+          re_re={this.state.re_re}
+        />
       </div>
     );
   }

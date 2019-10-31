@@ -23,3 +23,10 @@
   display: none;
 }
 
+.review {
+ height: max-content;
+}
+
+.re_review {
+  height: max-content;
+}
