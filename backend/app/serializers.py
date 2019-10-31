@@ -46,7 +46,7 @@ class StoreSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('url', 'id', 's_id', 'u_id', 'comment', 'created_at', 'star_score')
+        fields = ('url', 'id', 's_id', 'u_id', 'comment', 'created_at', 'star_score',)
 
 
 class ReviewCommentSerializer(serializers.ModelSerializer):
@@ -59,3 +59,4 @@ class ReviewFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_file
         fields = ('url', 'id', 'r_id', 'filename', 'original_name', 'image')
+
