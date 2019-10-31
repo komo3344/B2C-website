@@ -30,14 +30,6 @@ class MyRegistrationView(RegisterView):
 
 
 class UserSerializer(serializers.ModelSerializer):
-
-    def create(self, validated_data):
-        user = User.objects.filter(role_profile=1)
-        user.get_all_permissions()
-        user.save()
-
-        return user
-
     class Meta:
         model = User
         fields = ('url', 'id', 'username', 'role_profile', 'user_type', 'email')
@@ -54,7 +46,7 @@ class StoreSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('url', 'id', 's_id', 'u_id', 'comment', 'created_at', 'star_score')
+        fields = ('url', 'id', 's_id', 'u_id', 'comment', 'created_at', 'star_score',)
 
 
 class ReviewCommentSerializer(serializers.ModelSerializer):
@@ -67,3 +59,4 @@ class ReviewFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_file
         fields = ('url', 'id', 'r_id', 'filename', 'original_name', 'image')
+
