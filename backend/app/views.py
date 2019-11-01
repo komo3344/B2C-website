@@ -1,7 +1,13 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+
+from .helpers import modify_input_for_multiple_files
 from . import models
 from . import serializers
 from .permissions import IsOwnerOrReadOnly
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.views import APIView
+from django.http import JsonResponse
 
 
 class UserList(generics.ListCreateAPIView):
@@ -80,10 +86,41 @@ class ReviewCommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ReviewFile(generics.ListCreateAPIView):
-    queryset = models.Review_comment.objects.all()
+    queryset = models.Review_file.objects.all()
     serializer_class = serializers.ReviewFileSerializer
 
 
 class ReviewFileDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Review_comment.objects.all()
+    queryset = models.Review_file.objects.all()
     serializer_class = serializers.ReviewFileSerializer
+
+
+class ImageView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request):
+        all_images = models.Review_file.objects.all()
+        serializer = serializers.ReviewFileSerializer(all_images, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    def post(self, request, *args, **kwargs):
+        filename = request.data['filename']
+        original_name = request.data['original_name']
+        # converts querydict to original dict
+        images = dict((request.data).lists())['image']
+        flag = 1
+        arr = []
+        for img_name in images:
+            modified_data = modify_input_for_multiple_files(filename, original_name,
+                                                            img_name)
+            file_serializer = serializers.ReviewFileSerializer(data=modified_data)
+            if file_serializer.is_valid():
+                file_serializer.save()
+                arr.append(file_serializer.data)
+            else:
+                flag = 0
+
+        if flag == 1:
+            return Response(arr, status=status.HTTP_201_CREATED)
+        else:
+            return Response(arr, status=status.HTTP_400_BAD_REQUEST)

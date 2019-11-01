@@ -3,7 +3,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .serializers import MyRegistrationView
 from . import views
-
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
 urlpatterns = [
     path('rest-auth/registration/signup/', MyRegistrationView.as_view()),
     path('user/', views.UserList.as_view()),
@@ -22,6 +24,10 @@ urlpatterns = [
 
     path('review-file/', views.ReviewFile.as_view()),
     path('review-file/<int:pk>', views.ReviewFileDetail.as_view(), name='review_file-detail'),
+    path('review-file2/', views.ImageView.as_view()),
+    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-refresh/', refresh_jwt_token),
+    path('api-token-verity/', verify_jwt_token),
 ]
 
 urlpatterns += [

@@ -11,7 +11,7 @@ class MyUserAdmin(UserAdmin):
         (None, {'fields': ('role_profile', 'user_type')}),
     )
 
-    list_display = ('username', 'email', 'user_type', 'role_profile')
+    list_display = ('username', 'email', 'user_type', 'role_profile', 'is_staff')
     readonly_fields = ['username', 'email', 'role_profile', 'user_type']
 
 
@@ -82,8 +82,13 @@ class Review_comment_Admin(admin.ModelAdmin):
     readonly_fields = ['r_id', 'u_id', 's_id']
 
 
+class ReviewFileAdmin(admin.ModelAdmin):
+
+    list_display = ('r_id',)
+
+
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Store, StoreAdmin)
 admin.site.register(Review, ReviewAdmin)
-admin.site.register(Review_file)
+admin.site.register(Review_file, ReviewFileAdmin)
 admin.site.register(Review_comment, Review_comment_Admin)
