@@ -68,13 +68,13 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):  # 댓글 수정
 
 
 class ReviewComment(generics.ListCreateAPIView):    # 사장님 답글
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
 
 
 class ReviewCommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
 

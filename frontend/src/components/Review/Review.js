@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../image/certifying_shot.jpg'
 import './Review.css'
 
 const Review = (props) => {
+  const [value, setValue] = useState()
   const reviews = props.re
   const re_reviews = props.re_re
+
+  const onChangeComment = e => {
+    setValue(e.target.value)
+  }
 
   var test
   test = reviews.map((review) =>
@@ -26,10 +31,13 @@ const Review = (props) => {
         {props.type === 'B' &&
           <div>
             <button id='comment_button' onClick={() => { props.doDisplay() }}>사장님 댓글 달기</button>
-
             <div id="myDIV">
-              <form onSubmit={() => { props.HandleReviewComment() }}>
-                <textarea rows='8' cols='60' placeholder='사장님 댓글을 달아주세요'></textarea>
+              <form onSubmit={(e) => {
+                props.HandleReviewComment(e, value, review.id)
+                props.doDisplay()
+
+              }}>
+                <textarea onChange={onChangeComment} value={value} name='re_comment' rows='8' cols='60' placeholder='사장님 댓글을 달아주세요'></textarea>
                 <button type='submit'>등록하기</button>
               </form>
             </div>
@@ -46,7 +54,7 @@ const Review = (props) => {
                 <li>멘트 : {re_review.comment}</li>
                 <li>날짜 : {re_review.created_at}</li>
                 {props.type === 'B' &&
-                  <div id='buttons'><button onClick={() => { props.doEdit() }}>수정하기</button><button>삭제하기</button></div>}
+                  <div id='buttons'><button onClick={() => { props.doEdit() }}>수정하기</button><button onClick={(e) => props.deleteReComment(e, re_review.id)}>삭제하기</button></div>}
               </ul>
             }
           </div>
