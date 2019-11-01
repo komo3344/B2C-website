@@ -5,3 +5,10 @@ db.sqlite3
 /static
 .DS_Store
 .ieda/
+backend/app/migrations/0001_initial.py
+backend/app/migrations/0002_review_comment_s_id.py
+backend/.idea/backend.iml
+backend/.idea/misc.xml
+backend/.idea/modules.xml
+backend/.idea/vcs.xml
+backend/.idea/inspectionProfiles/profiles_settings.xml

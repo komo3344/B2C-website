@@ -37,7 +37,16 @@ class ReviewContainer extends Component {
       .then(
         res => {
           this.setState({
-            Review: res.data
+            Review: res.data,
+            re: res.data
+          })
+        }
+      )
+    Axios.get(`http://127.0.0.1:8000/review-comment`)
+      .then(
+        res => {
+          this.setState({
+            re_re: res.data
           })
         }
       )

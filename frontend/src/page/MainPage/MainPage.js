@@ -59,6 +59,7 @@ class MainPage extends Component {
       )
     }
     else {
+      console.log(this.state)
       return (
         <Redirect to='/' />
       )
