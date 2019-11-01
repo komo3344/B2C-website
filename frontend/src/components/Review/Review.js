@@ -4,11 +4,20 @@ import './Review.css'
 
 const Review = (props) => {
   const [value, setValue] = useState()
+  const [C_edit_comment, set_C_edit_comment] = useState()
+  const [C_edit_star_score, setC_edit_star_score] = useState()
   const reviews = props.re
   const re_reviews = props.re_re
 
   const onChangeComment = e => {
     setValue(e.target.value)
+  }
+
+  const onChangeEditComment = e => {
+    set_C_edit_comment(e.target.value)
+  }
+  const onChangeEditStarscore = e => {
+    setC_edit_star_score(e.target.value)
   }
 
   var test
@@ -22,11 +31,26 @@ const Review = (props) => {
         <li>댓글 id :{review.id}</li>
         <li>댓글 가게 id : {review.s_id}</li>
         <li>작성자 : {review.u_id}</li>
-        <li>멘트 : {review.comment}</li>
-        <li>별점 : {review.star_score}</li>
+        <div id='C_comment'>
+          <li>멘트 : {review.comment}</li>
+          <li>별점 : {review.star_score}</li>
+        </div>
+        <div id='C_comment_edit'>
+          <form onSubmit={e => {
+            props.handle_C_comment_edit(e, review.id, C_edit_comment, C_edit_star_score)
+            props.doEdit()
+          }}>
+            <li>멘트 : <textarea name='C_edit_comment' onChange={onChangeEditComment} value={C_edit_comment}></textarea></li>
+            <li>별점 : <input type='number' name='C_edit_star_score' onChange={onChangeEditStarscore} value={C_edit_star_score}></input></li>
+            <button type='submit'>수정하기</button>
+          </form>
+        </div>
         <li>날짜 : {review.created_at}</li>
         {props.type === 'C' &&
-          <button onClick={(e) => { props.deleteComment(e, review.id) }}>삭제하기</button>
+          <div id='C_comment_buttons'>
+            <button onClick={() => { props.doEdit() }}>수정하기</button>
+            <button onClick={(e) => { props.deleteComment(e, review.id) }}>삭제하기</button>
+          </div>
         }
         {props.type === 'B' &&
           <div>

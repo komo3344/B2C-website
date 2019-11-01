@@ -6,7 +6,7 @@ import axios from "axios";
 class AuthPage extends Component {
   state = {
     login_check: false,
-    type: 'B',
+    type: 'C',
     displayed_form: 'login'
   }
 

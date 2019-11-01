@@ -33,7 +33,7 @@ class ReviewContainer extends Component {
     }).then(res => {
       this.get_review()
       $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
-      
+
     }).catch(e => { console.log(e) })
   }
 
@@ -94,6 +94,30 @@ class ReviewContainer extends Component {
     }
   }
 
+  doEditComment = () => {
+    var C_comment = document.getElementById("C_comment")
+    var C_comment_edit = document.getElementById("C_comment_edit")
+    var C_comment_buttons = document.getElementById("C_comment_buttons")
+
+    if (C_comment_edit.style.display === 'none') {
+      C_comment_edit.style.display = 'block'
+    } else {
+      C_comment_edit.style.display = 'none'
+    }
+
+    if (C_comment.style.display === 'block') {
+      C_comment.style.display = 'none'
+    } else {
+      C_comment.style.display = 'block'
+    }
+
+    if (C_comment_buttons.style.display === 'block') {
+      C_comment_buttons.style.display = 'none'
+    } else {
+      C_comment_buttons.style.display = 'block'
+    }
+  }
+
   deleteComment = (e, id) => {
     Axios.delete(`http://127.0.0.1:8000/review/${id}`)
       .catch(e => console.log(e))
@@ -110,47 +134,33 @@ class ReviewContainer extends Component {
       )
   }
 
-  doEditComment = () => {
-    var boss_comment = document.getElementById("boss_comment")
-    var buttons = document.getElementById("buttons")
-    var edit_comment = document.getElementById("edit_comment")
-
-    if (edit_comment.style.display === 'none') {
-      edit_comment.style.display = 'block'
-    } else {
-      edit_comment.style.display = 'none'
-    }
-
-    if (boss_comment.style.display === 'block') {
-      boss_comment.style.display = 'none'
-    } else {
-      boss_comment.style.display = 'block'
-    }
-
-    if (buttons.style.display === 'block') {
-      buttons.style.display = 'none'
-    } else {
-      buttons.style.display = 'block'
-    }
-
-
-  }
-
-  HandleReviewComment = (e,data,r_id, r_r_id) => {
+  HandleReviewComment = (e, data, r_id, r_r_id) => {
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review-comment/', {
-      s_id : this.props.store_id,
-      r_id : r_id,
-      u_id : localStorage.getItem('user_id'),
-      comment : data
+      s_id: this.props.store_id,
+      r_id: r_id,
+      u_id: localStorage.getItem('user_id'),
+      comment: data
     }).then(res => {
       console.log(res)
       this.get_review()
-      }
+    }
     ).catch(
       e => console.log(e)
     )
   }
+
+  handle_C_comment_edit = (e, id, comment, star_score) => {
+    e.preventDefault()
+    Axios.put(`http://127.0.0.1:8000/review/${id}`,{
+      comment: comment,
+      star_score : star_score
+    }).then(res => {
+      this.get_review()      
+    })
+    .catch(e => console.log(e))
+  }
+
 
   render() {
     return (
@@ -170,6 +180,7 @@ class ReviewContainer extends Component {
           doEdit={this.doEditComment}
           doDisplay={this.doDisplay}
           HandleReviewComment={this.HandleReviewComment}
+          handle_C_comment_edit={this.handle_C_comment_edit}
           deleteComment={this.deleteComment}
           deleteReComment={this.deleteReComment}
           re={this.state.re}

@@ -22,6 +22,18 @@
 #edit_comment{
   display: none;
 }
+/*이 문장 밑으로 부터 정리한거*/
+#C_comment{
+  display: block;
+}
+
+#C_comment_edit{
+  display: none;
+}
+
+#C_comment_buttons{
+  display: block;
+}
 
 .review {
  height: max-content;
