@@ -118,9 +118,9 @@ class ReviewContainer extends Component {
     }
   }
 
-  doCreate_B = () => {
-    var B_comment_create = document.getElementById("B_comment_create")
-    var B_comment_create_buttons = document.getElementById("B_comment_create_buttons")
+  doCreate_B = (id) => {
+    var B_comment_create = document.getElementById(`B_comment_create_${id}`)
+    var B_comment_create_buttons = document.getElementById(`B_comment_create_buttons_${id}`)
 
     if (B_comment_create.style.display === 'none') {
       B_comment_create.style.display = 'block'
@@ -135,10 +135,10 @@ class ReviewContainer extends Component {
     }
   }
 
-  doEdit_B = () => {
-    var B_comment = document.getElementById("B_comment")
-    var B_comment_edit = document.getElementById("B_comment_edit")
-    var B_comment_buttons = document.getElementById("B_comment_buttons")
+  doEdit_B = (id) => {
+    var B_comment = document.getElementById(`B_comment_${id}`)
+    var B_comment_edit = document.getElementById(`B_comment_edit_${id}`)
+    var B_comment_buttons = document.getElementById(`B_comment_buttons_${id}`)
 
     if (B_comment_edit.style.display === 'none') {
       B_comment_edit.style.display = 'block'

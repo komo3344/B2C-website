@@ -58,13 +58,13 @@ const Review = (props) => {
         }
         {props.type === 'B' &&
           <div>
-            <div id='B_comment_create_buttons' >
-              <button onClick={() => { props.doCreate_B() }}>사장님 댓글 달기</button>
+            <div id={`B_comment_create_buttons_${review.id}`} >
+              <button onClick={() => { props.doCreate_B(review.id) }}>사장님 댓글 달기</button>
             </div>
-            <div id="B_comment_create">
+            <div id={`B_comment_create_${review.id}`}>
               <form onSubmit={(e) => {
                 props.handle_B_comment_create(e, B_create_comment, review.id)
-                props.doCreate_B()
+                props.doCreate_B(review.id)
               }}>
                 <textarea onChange={onChangeCreateComment_B} value={B_create_comment} name='B_edit_comment' rows='8' cols='60' placeholder='사장님 댓글을 달아주세요'></textarea>
                 <button type='submit'>등록하기</button>
@@ -73,30 +73,30 @@ const Review = (props) => {
           </div>
         }
         {re_reviews.map((re_review) =>
-          <div>
+          <div key={re_review.id}>
             {review.id === re_review.r_id &&
               <ul>
                 <h1>대댓글</h1>
                 <li>대댓글 id :{re_review.id}</li>
                 <li>해당 댓글 id : {re_review.r_id}</li>
                 <li>사장님 id : {re_review.u_id}</li>
-                <div id='B_comment_edit'>
+                <div id={`B_comment_edit_${re_review.id}`}>
                   <form onSubmit={e => {
                     props.handle_B_comment_edit(e, re_review.id, B_edit_comment)
-                    props.doEdit_B()
+                    props.doEdit_B(re_review.id)
                   }
                   }>
                     <li>멘트 : <input type='text' onChange={onChangeEditComment_B} value={B_edit_comment} name='B_edit_comment'></input></li>
                     <button type='submit'>수정하기</button>
                   </form>
                 </div>
-                <div id='B_comment'>
+                <div id={`B_comment_${re_review.id}`}>
                   <li>멘트 : {re_review.comment}</li>
                 </div>
                 <li>날짜 : {re_review.created_at}</li>
                 {props.type === 'B' &&
-                  <div id='B_comment_buttons'>
-                    <button onClick={() => { props.doEdit_B() }}>수정하기</button>
+                  <div id={`B_comment_buttons_${re_review.id}`}>
+                    <button onClick={() => { props.doEdit_B(re_review.id) }}>수정하기</button>
                     <button onClick={(e) => props.deleteReComment(e, re_review.id)}>삭제하기</button>
                   </div>
                 }

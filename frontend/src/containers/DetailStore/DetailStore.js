@@ -48,11 +48,7 @@ class DetailStore extends Component {
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
-          <button onClick={this.check}>test</button>
-          <h1>{this.state.change && <span>aaaaaa</span>}</h1>
           가게 번호{this.props.store_id}
-          <br />
-          유저 타입{this.props.type}
           <br />
           <img src={logo} alt='가게 사진' />
           <p>가게 이름 : {this.state.store.store_name}</p>
@@ -65,8 +61,6 @@ class DetailStore extends Component {
       return (
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
-          <br />
-          유저 타입{this.props.type}
           <br />
           <img src={logo} alt='가게 사진' />
           <button>사진 바꾸기</button>

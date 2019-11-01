@@ -26,7 +26,7 @@ class StoreDetail(generics.RetrieveUpdateDestroyAPIView):   # 가게 정보 수�
 
 
 class MyStoreDetail(generics.ListCreateAPIView):    # 자신의 가게만 보여줌
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
 

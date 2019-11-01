@@ -22,6 +22,7 @@ class MainPage extends Component {
   componentDidMount() {
     axios.get(`http://127.0.0.1:8000/user/${localStorage.getItem('user_id')}`,{
       headers:{
+        Accept: "application/json, text/plain, */*",
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
     }).then(
@@ -29,8 +30,9 @@ class MainPage extends Component {
         this.setState({
           username: res.data.username
         })
+        console.log(res)
       }
-    )
+    ).catch(e => console.log(e))
   }
 
   render() {

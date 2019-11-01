@@ -13,17 +13,22 @@ class ProfileContainer extends Component {
       
     ]
   }
-
+  // Authorization: `Bearer $${localStorage.getItem('token')}` <- 500 error
+  // Basic 이 틀리면 401 error
   componentDidMount() {
-    axios.get("http://127.0.0.1:8000/mystore")
+    console.log('working')
+    axios.get("http://127.0.0.1:8000/mystore/",{
+      headers: {
+        Authorization: `Bearer jwt $${localStorage.getItem('token')}`
+      }
+    })
     .then(res =>{
       console.log(res.data)
       this.setState({
         store : res.data
       })
       console.log(this.state)
-    }
-    )
+    }).catch(e => console.log(e))
   }
 
   Profile_edit = () => {
@@ -82,7 +87,6 @@ class ProfileContainer extends Component {
       );
     }
     else {
-      console.log(this.state)
       return (
         <div>
           프로필 게시판 입니다
