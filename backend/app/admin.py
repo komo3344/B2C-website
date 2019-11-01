@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User, Store, Review, Review_file, Review_comment
+from django.db.models import Avg
 
 
 class MyUserAdmin(UserAdmin):
@@ -26,14 +27,19 @@ class StoreAdmin(admin.ModelAdmin):
             if request.user.is_superuser:
                 return []
             else:
-                return [f.name for f in self.model._meta.fields]
+                return [f.name for f in self.model.meta.fields]
 
-    def reviews_list(self, obj):
+    def reviews_count(self, obj):
         reviews = Review.objects.filter(s_id=obj)
         return reviews.count()
 
-    reviews_list.short_description = '리뷰 수'
-    list_display = ('store_name', 'u_id', 'business_number', 'reviews_list')
+    def average_star_score(self, obj):
+        star_score = Review.objects.filter(s_id=obj).aggregate(Avg('star_score'))
+        return star_score['star_score__avg']
+
+    reviews_count.short_description = '리뷰 수'
+    average_star_score.short_description = '평점'
+    list_display = ('store_name', 'u_id', 'business_number', 'reviews_count', 'average_star_score')
     search_fields = ('store_name', 'business_number')
     readonly_fields = ['u_id', 'store_name', 'business_number', ]
     admin.ModelAdmin.short_description = "Review"
@@ -52,6 +58,7 @@ class ReviewAdmin(admin.ModelAdmin):
                 return []
             else:
                 return [f.name for f in self.model._meta.fields]
+
     list_display = ('s_id', 'u_id', 'star_score', 'created_at',)
     search_fields = ('s_id', 'u_id', 'star_score', 'created_at',)
     readonly_fields = ['s_id', 'u_id', 'star_score', 'created_at', ]
@@ -70,6 +77,7 @@ class Review_comment_Admin(admin.ModelAdmin):
                 return []
             else:
                 return [f.name for f in self.model._meta.fields]
+
     list_display = ('r_id', 'u_id', 'created_at',)
     readonly_fields = ['r_id', 'u_id', 's_id']
 
