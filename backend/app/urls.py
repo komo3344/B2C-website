@@ -1,10 +1,8 @@
 from django.urls import path, include
-
-from .serializers import MyRegistrationView
-from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from .serializers import MyRegistrationView
+from . import views
 
 urlpatterns = [
     path('rest-auth/registration/signup/', MyRegistrationView.as_view()),

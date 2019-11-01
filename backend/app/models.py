@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Permission
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
@@ -41,7 +41,7 @@ class Store(models.Model):
 
 
 class Review(models.Model):
-    s_id = models.ForeignKey(Store, on_delete=models.CASCADE, null=True)
+    s_id = models.ForeignKey(Store, on_delete=models.CASCADE, null=True, related_name="Store")
     u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     comment = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
