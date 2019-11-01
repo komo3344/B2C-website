@@ -3,17 +3,21 @@ import logo from '../../image/certifying_shot.jpg'
 import './Review.css'
 
 const Review = (props) => {
-  const [value, setValue] = useState()
+  const [B_edit_comment, set_B_edit_comment] = useState()
   const [C_edit_comment, set_C_edit_comment] = useState()
   const [C_edit_star_score, setC_edit_star_score] = useState()
+  const [B_create_comment, set_B_create_comment] = useState()
   const reviews = props.re
   const re_reviews = props.re_re
 
-  const onChangeComment = e => {
-    setValue(e.target.value)
-  }
 
-  const onChangeEditComment = e => {
+  const onChangeCreateComment_B = e => {
+    set_B_create_comment(e.target.value)
+  }
+  const onChangeEditComment_B = e => {
+    set_B_edit_comment(e.target.value)
+  }
+  const onChangeEditComment_C = e => {
     set_C_edit_comment(e.target.value)
   }
   const onChangeEditStarscore = e => {
@@ -38,9 +42,9 @@ const Review = (props) => {
         <div id='C_comment_edit'>
           <form onSubmit={e => {
             props.handle_C_comment_edit(e, review.id, C_edit_comment, C_edit_star_score)
-            props.doEdit()
+            props.doEdit_C()
           }}>
-            <li>멘트 : <textarea name='C_edit_comment' onChange={onChangeEditComment} value={C_edit_comment}></textarea></li>
+            <li>멘트 : <textarea name='C_edit_comment' onChange={onChangeEditComment_C} value={C_edit_comment}></textarea></li>
             <li>별점 : <input type='number' name='C_edit_star_score' onChange={onChangeEditStarscore} value={C_edit_star_score}></input></li>
             <button type='submit'>수정하기</button>
           </form>
@@ -48,20 +52,21 @@ const Review = (props) => {
         <li>날짜 : {review.created_at}</li>
         {props.type === 'C' &&
           <div id='C_comment_buttons'>
-            <button onClick={() => { props.doEdit() }}>수정하기</button>
+            <button onClick={() => { props.doEdit_C() }}>수정하기</button>
             <button onClick={(e) => { props.deleteComment(e, review.id) }}>삭제하기</button>
           </div>
         }
         {props.type === 'B' &&
           <div>
-            <button id='comment_button' onClick={() => { props.doDisplay() }}>사장님 댓글 달기</button>
-            <div id="myDIV">
+            <div id='B_comment_create_buttons' >
+              <button onClick={() => { props.doCreate_B() }}>사장님 댓글 달기</button>
+            </div>
+            <div id="B_comment_create">
               <form onSubmit={(e) => {
-                props.HandleReviewComment(e, value, review.id)
-                props.doDisplay()
-
+                props.handle_B_comment_create(e, B_create_comment, review.id)
+                props.doCreate_B()
               }}>
-                <textarea onChange={onChangeComment} value={value} name='re_comment' rows='8' cols='60' placeholder='사장님 댓글을 달아주세요'></textarea>
+                <textarea onChange={onChangeCreateComment_B} value={B_create_comment} name='B_edit_comment' rows='8' cols='60' placeholder='사장님 댓글을 달아주세요'></textarea>
                 <button type='submit'>등록하기</button>
               </form>
             </div>
@@ -75,10 +80,26 @@ const Review = (props) => {
                 <li>대댓글 id :{re_review.id}</li>
                 <li>해당 댓글 id : {re_review.r_id}</li>
                 <li>사장님 id : {re_review.u_id}</li>
-                <li>멘트 : {re_review.comment}</li>
+                <div id='B_comment_edit'>
+                  <form onSubmit={e => {
+                    props.handle_B_comment_edit(e, re_review.id, B_edit_comment)
+                    props.doEdit_B()
+                  }
+                  }>
+                    <li>멘트 : <input type='text' onChange={onChangeEditComment_B} value={B_edit_comment} name='B_edit_comment'></input></li>
+                    <button type='submit'>수정하기</button>
+                  </form>
+                </div>
+                <div id='B_comment'>
+                  <li>멘트 : {re_review.comment}</li>
+                </div>
                 <li>날짜 : {re_review.created_at}</li>
                 {props.type === 'B' &&
-                  <div id='buttons'><button onClick={() => { props.doEdit() }}>수정하기</button><button onClick={(e) => props.deleteReComment(e, re_review.id)}>삭제하기</button></div>}
+                  <div id='B_comment_buttons'>
+                    <button onClick={() => { props.doEdit_B() }}>수정하기</button>
+                    <button onClick={(e) => props.deleteReComment(e, re_review.id)}>삭제하기</button>
+                  </div>
+                }
               </ul>
             }
           </div>

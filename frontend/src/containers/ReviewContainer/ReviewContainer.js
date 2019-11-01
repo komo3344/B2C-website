@@ -23,7 +23,7 @@ class ReviewContainer extends Component {
     });
   };
 
-  handle_review = (e, comment, star_score) => {
+  handle_C_review_create = (e, comment, star_score) => {
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review/', {
       comment: comment,
@@ -94,7 +94,7 @@ class ReviewContainer extends Component {
     }
   }
 
-  doEditComment = () => {
+  doEdit_C = () => {
     var C_comment = document.getElementById("C_comment")
     var C_comment_edit = document.getElementById("C_comment_edit")
     var C_comment_buttons = document.getElementById("C_comment_buttons")
@@ -118,6 +118,47 @@ class ReviewContainer extends Component {
     }
   }
 
+  doCreate_B = () => {
+    var B_comment_create = document.getElementById("B_comment_create")
+    var B_comment_create_buttons = document.getElementById("B_comment_create_buttons")
+
+    if (B_comment_create.style.display === 'none') {
+      B_comment_create.style.display = 'block'
+    } else {
+      B_comment_create.style.display = 'none'
+    }
+
+    if (B_comment_create_buttons.style.display === 'block') {
+      B_comment_create_buttons.style.display = 'none'
+    } else {
+      B_comment_create_buttons.style.display = 'block'
+    }
+  }
+
+  doEdit_B = () => {
+    var B_comment = document.getElementById("B_comment")
+    var B_comment_edit = document.getElementById("B_comment_edit")
+    var B_comment_buttons = document.getElementById("B_comment_buttons")
+
+    if (B_comment_edit.style.display === 'none') {
+      B_comment_edit.style.display = 'block'
+    } else {
+      B_comment_edit.style.display = 'none'
+    }
+
+    if (B_comment.style.display === 'block') {
+      B_comment.style.display = 'none'
+    } else {
+      B_comment.style.display = 'block'
+    }
+
+    if (B_comment_buttons.style.display === 'block') {
+      B_comment_buttons.style.display = 'none'
+    } else {
+      B_comment_buttons.style.display = 'block'
+    }
+  }
+
   deleteComment = (e, id) => {
     Axios.delete(`http://127.0.0.1:8000/review/${id}`)
       .catch(e => console.log(e))
@@ -134,7 +175,7 @@ class ReviewContainer extends Component {
       )
   }
 
-  HandleReviewComment = (e, data, r_id, r_r_id) => {
+  handle_B_comment_create = (e, data, r_id, r_r_id) => {
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review-comment/', {
       s_id: this.props.store_id,
@@ -161,13 +202,23 @@ class ReviewContainer extends Component {
     .catch(e => console.log(e))
   }
 
+  handle_B_comment_edit = (e, id, comment) => {
+    e.preventDefault()
+    Axios.put(`http://127.0.0.1:8000/review-comment/${id}`,{
+      comment: comment,
+    }).then(res => {
+      this.get_review()      
+    })
+    .catch(e => console.log(e))
+  }
+  
 
   render() {
     return (
       <div>
         <h3>리뷰우</h3>
         {this.props.type === 'C' &&
-          <form id='commentCreate' onSubmit={(e) => { this.handle_review(e, this.state.comment, this.state.star_score) }}>
+          <form id='commentCreate' onSubmit={(e) => { this.handle_C_review_create(e, this.state.comment, this.state.star_score) }}>
             <input type='number' onChange={this.handle_change} name='star_score' min="1" max="5" placeholder='별점'></input>
             <textarea rows='8' onChange={this.handle_change} cols='60' placeholder='댓글 내용을 작성해주세요!' name='comment' required></textarea>
             <input type='file'></input>
@@ -177,9 +228,11 @@ class ReviewContainer extends Component {
         <Review
           data={this.state.Review}
           type={this.props.type}
-          doEdit={this.doEditComment}
-          doDisplay={this.doDisplay}
-          HandleReviewComment={this.HandleReviewComment}
+          doCreate_B={this.doCreate_B}
+          doEdit_C={this.doEdit_C}
+          doEdit_B={this.doEdit_B}
+          handle_B_comment_create={this.handle_B_comment_create}
+          handle_B_comment_edit={this.handle_B_comment_edit}
           handle_C_comment_edit={this.handle_C_comment_edit}
           deleteComment={this.deleteComment}
           deleteReComment={this.deleteReComment}
