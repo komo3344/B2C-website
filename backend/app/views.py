@@ -33,7 +33,7 @@ class StoreDetail(generics.RetrieveUpdateDestroyAPIView):  # 가게 정보 수�
     serializer_class = serializers.StoreSerializer
 
 
-class MyStoreDetail(generics.ListCreateAPIView):  # 자신의 가게만 보여줌
+class MyStoreDetail(generics.ListCreateAPIView):    # 자신의 가게만 보여줌
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
@@ -82,7 +82,7 @@ class ReviewComment(generics.ListCreateAPIView):  # 사장님 답글
 
 
 class ReviewCommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsOwnerOrReadOnly]
+    # permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
 
