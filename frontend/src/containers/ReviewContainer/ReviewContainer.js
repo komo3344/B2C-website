@@ -114,10 +114,10 @@ class ReviewContainer extends Component {
     }
   }
 
-  doEdit_C = () => {
-    var C_comment = document.getElementById("C_comment")
-    var C_comment_edit = document.getElementById("C_comment_edit")
-    var C_comment_buttons = document.getElementById("C_comment_buttons")
+  doEdit_C = (id) => {
+    var C_comment = document.getElementById(`C_comment_${id}`)
+    var C_comment_edit = document.getElementById(`C_comment_edit_${id}`)
+    var C_comment_buttons = document.getElementById(`C_comment_buttons_${id}`)
 
     if (C_comment_edit.style.display === 'none') {
       C_comment_edit.style.display = 'block'
@@ -233,7 +233,7 @@ class ReviewContainer extends Component {
         Authorization : `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      this.get_review()      
+      this.get_review()    
     })
     .catch(e => console.log(e))
   }

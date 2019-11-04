@@ -58,6 +58,8 @@ class DetailStore extends Component {
           <p>가게 이름 : {this.state.store.store_name}</p>
           <p>가게 게시물 제목 : {this.state.store.title}</p>
           <p>가게 내용 : {this.state.store.content}</p>
+          <p>가게 댓글 수 : {this.state.store.reviews_count}</p>
+          <p>가게 평점 : {this.state.store.average_star_score}</p>
           <ReviewContainer Review={this.state.Review} type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>
       );

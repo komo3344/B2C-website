@@ -63,6 +63,15 @@ class ReviewList(generics.ListCreateAPIView):  # 댓글 리스트
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
 
+    def create(self, request, *args, **kwargs):
+        request.data['u_id'] = request.user.id
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
 
 class StoreReviewList(generics.ListAPIView):  # 해당가게 댓글 리스트
     queryset = models.Review.objects.all()
@@ -96,6 +105,14 @@ class ReviewComment(generics.ListCreateAPIView):  # 사장님 답글
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
+
+    def create(self, request, *args, **kwargs):
+        request.data['u_id'] = request.user.id
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ReviewCommentDetail(generics.RetrieveUpdateDestroyAPIView):
