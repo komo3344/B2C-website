@@ -85,7 +85,7 @@ class DetailStore extends Component {
           </div>
           <div id='edit_store_info_button'>
             <button onClick={this.storeEdit}>가게 정보 수정</button>
-            <button>가게 삭제</button>
+            <button onClick={(e) => {this.props.handle_deletestore(e,this.props.store_id)}}>가게 삭제</button>
           </div>
           <ReviewContainer type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>

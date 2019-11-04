@@ -23,9 +23,7 @@ class MainPage extends Component {
     axios.post('http://127.0.0.1:8000/api-token-refresh/', {
       token: localStorage.getItem('token')
     }).then(res => {
-      console.log(localStorage.getItem('token'))
       localStorage.setItem('token', res.data.token)
-      console.log(localStorage.getItem('token'))
       axios.get(`http://127.0.0.1:8000/current-user/`, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
@@ -81,7 +79,6 @@ class MainPage extends Component {
       )
     }
     else {
-      console.log(this.state)
       return (
         <Redirect to='/' />
       )

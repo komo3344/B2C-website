@@ -29,6 +29,18 @@ class BodyContainer extends Component {
     })
   }
 
+  handle_deletestore = (e, store_id) => {
+    axios.delete(`http://127.0.0.1:8000/store/${store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => {
+      console.log(res)
+      this.props.display_form('profile')
+    })
+    .catch(e => console.log(e))
+  }
 
   render() {
     if (this.props.displayed_form === 'home') {
@@ -63,7 +75,7 @@ class BodyContainer extends Component {
     }
     else if (this.props.displayed_form === 'store') {
       return (
-        <DetailStore type={this.props.type} store_id={this.props.store_id} />
+        <DetailStore type={this.props.type} store_id={this.props.store_id} handle_deletestore={this.handle_deletestore} />
       )
     }
     else {

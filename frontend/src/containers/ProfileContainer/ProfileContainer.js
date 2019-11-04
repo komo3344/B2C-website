@@ -13,21 +13,16 @@ class ProfileContainer extends Component {
       
     ]
   }
-  // Authorization: `Bearer $${localStorage.getItem('token')}` <- 500 error
-  // Basic 이 틀리면 401 error
   componentDidMount() {
-    console.log('working')
     axios.get("http://127.0.0.1:8000/mystore/",{
       headers:{
         Authorization : `jwt ${localStorage.getItem('token')}`
       }
     })
     .then(res =>{
-      console.log(res.data)
       this.setState({
         store : res.data
       })
-      console.log(this.state)
     }).catch(e => console.log(e))
   }
 

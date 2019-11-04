@@ -6,6 +6,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .helpers import modify_input_for_multiple_files
 from . import models
 from . import serializers
+from .models import User, Store
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
@@ -33,6 +34,14 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class StoreList(generics.ListCreateAPIView):  # 전체 가게리스트
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
+
+    def create(self, request, *args, **kwargs):
+        request.data['u_id'] = request.user.id
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class StoreDetail(generics.RetrieveUpdateDestroyAPIView):  # 가게 정보 수정

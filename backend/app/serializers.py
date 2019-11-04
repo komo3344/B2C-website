@@ -39,10 +39,10 @@ class UserSerializer(serializers.ModelSerializer):
                   'user_type', 'email')
 
 
-class StoreSerializer(serializers.HyperlinkedModelSerializer):
-    current_user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
-    reviews_count = serializers.SerializerMethodField('review_count_f')
-    average_star_score = serializers.SerializerMethodField('aver_star_score')
+class StoreSerializer(serializers.ModelSerializer):
+    current_user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())  # 현재접속유저
+    reviews_count = serializers.SerializerMethodField('review_count_f')         # 댓글 갯수
+    average_star_score = serializers.SerializerMethodField('aver_star_score')   # 평균 평점
 
     def review_count_f(self, obj):
         reviews = Review.objects.filter(s_id=obj)
