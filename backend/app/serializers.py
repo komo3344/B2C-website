@@ -3,6 +3,8 @@ from django.db.models import Avg
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_auth.registration.views import RegisterView
 from rest_framework import serializers
+
+
 from .models import User, Store, Review, Review_comment, \
     Review_file
 
@@ -37,7 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'user_type', 'email')
 
 
-class StoreSerializer(serializers.ModelSerializer):
+class StoreSerializer(serializers.HyperlinkedModelSerializer):
     current_user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
     reviews_count = serializers.SerializerMethodField('review_count_f')
     average_star_score = serializers.SerializerMethodField('aver_star_score')
@@ -77,7 +79,8 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 class ReviewFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_file
-        fields = ('url', 'id', 'r_id',
+        fields = ('id', 'r_id',
                   'filename', 'original_name', 'image'
                   )
+
 
