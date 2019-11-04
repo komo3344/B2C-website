@@ -10,9 +10,9 @@ class DetailStore extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
       .then(res => {
@@ -23,6 +23,31 @@ class DetailStore extends Component {
         console.log(e)
       })
   }
+
+  handle_get_store = () => {
+    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => {
+        this.setState({
+          store: res.data,
+        })
+      }).catch(e => {
+        console.log(e)
+      })
+  }
+
+  handle_change = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(prevstate => {
+      const newState = { ...prevstate };
+      newState[name] = value;
+      return newState;
+    });
+  };
 
   storeEdit = () => {
     var store_info = document.getElementById("store_info")
@@ -46,6 +71,24 @@ class DetailStore extends Component {
     } else {
       edit_store_info_button.style.display = 'block'
     }
+  }
+
+  handle_info_edit = (e, store_name, business_number, title, content) => {
+    e.preventDefault()
+    console.log(store_name, business_number, title, content)
+    axios.put(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
+      store_name: store_name,
+      business_number: business_number,
+      title: title,
+      content: content
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      this.handle_get_store()
+    })
+      .catch(e => console.log(e))
   }
 
   render() {
@@ -77,17 +120,20 @@ class DetailStore extends Component {
             <p>가게 내용 : {this.state.store.content}</p>
           </div>
           <div id='edit_store_info'>
-            <form onSubmit={this.handleSubmit2}>
-              가게 이름 : <input type='text' name='store_name' value={this.state.store.store_name}></input><br />
-              사업자 번호 : <input type='number' name='business_number' value={this.state.store.business_number}></input><br />
-              가게 게시물 제목 : <input type='text' name='title' value={this.state.store.title}></input><br />
-              가게 내용 : <textarea name='content'>{this.state.store.content}</textarea><br />
+            <form onSubmit={(e) => {
+              this.handle_info_edit(e, this.state.store_name, this.state.business_number, this.state.title, this.state.content)
+              this.storeEdit()
+            }}>
+              가게 이름 : <input type='text' onChange={this.handle_change} name='store_name' ></input><br />
+              사업자 번호 : <input type='number' onChange={this.handle_change} name='business_number' ></input><br />
+              가게 게시물 제목 : <input type='text' onChange={this.handle_change} name='title'></input><br />
+              가게 내용 : <textarea name='content' onChange={this.handle_change}></textarea><br />
               <button type='submit'>수정하기</button>
             </form>
           </div>
           <div id='edit_store_info_button'>
             <button onClick={this.storeEdit}>가게 정보 수정</button>
-            <button onClick={(e) => {this.props.handle_deletestore(e,this.props.store_id)}}>가게 삭제</button>
+            <button onClick={(e) => { this.props.handle_deletestore(e, this.props.store_id) }}>가게 삭제</button>
           </div>
           <ReviewContainer type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>

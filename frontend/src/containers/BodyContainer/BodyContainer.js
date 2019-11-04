@@ -37,7 +37,9 @@ class BodyContainer extends Component {
     .then(res => {
       this.props.display_form('profile')
     })
-    .catch(e => console.log(e))
+    .catch(e => {
+      alert('자신의 가게만 삭제 가능합니다')
+    })
   }
 
   render() {
