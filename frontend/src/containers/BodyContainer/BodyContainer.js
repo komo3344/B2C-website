@@ -22,7 +22,6 @@ class BodyContainer extends Component {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      console.log(res)
       this.props.display_form('home')
     }).catch(e => {
       console.log(e)
@@ -36,7 +35,6 @@ class BodyContainer extends Component {
       }
     })
     .then(res => {
-      console.log(res)
       this.props.display_form('profile')
     })
     .catch(e => console.log(e))
