@@ -10,7 +10,11 @@ class DetailStore extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`)
+    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .then(res => {
         this.setState({
           store: res.data,

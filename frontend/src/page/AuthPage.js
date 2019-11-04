@@ -19,19 +19,13 @@ class AuthPage extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault()
-    axios.post('http://127.0.0.1:8000/rest-auth/login/',{
+    axios.post('http://127.0.0.1:8000/api-token-auth/',{
       username: data.id,
       password: data.password
     })
     .then(res => {
       localStorage.setItem('token', res.data.token)
-      if(res.data.user.role_profile === 1){
-        localStorage.setItem('type', 'B')
-      } else if (res.data.user.role_profile === 2){
-        localStorage.setItem('type', 'C')
-      }
-      else localStorage.setItem('type', 'A')
-      localStorage.setItem('user_id', res.data.user.id);
+      localStorage.setItem('type', 'B')
       this.handle_login_check()
     }
     )

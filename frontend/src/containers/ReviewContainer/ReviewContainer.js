@@ -30,6 +30,10 @@ class ReviewContainer extends Component {
       star_score: star_score,
       s_id: this.props.store_id,
       u_id: localStorage.getItem('user_id')
+    },{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
     }).then(res => {
       this.get_review()
       $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
@@ -38,7 +42,11 @@ class ReviewContainer extends Component {
   }
 
   get_review = () => {
-    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`)
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .then(
         res => {
           this.setState({
@@ -47,7 +55,11 @@ class ReviewContainer extends Component {
           })
         }
       )
-    Axios.get(`http://127.0.0.1:8000/review-comment`)
+    Axios.get(`http://127.0.0.1:8000/review-comment`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .then(
         res => {
           this.setState({
@@ -60,7 +72,11 @@ class ReviewContainer extends Component {
 
 
   componentDidMount() {
-    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`)
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .then(
         res => {
           this.setState({
@@ -69,7 +85,11 @@ class ReviewContainer extends Component {
           })
         }
       )
-    Axios.get(`http://127.0.0.1:8000/review-comment`)
+    Axios.get(`http://127.0.0.1:8000/review-comment`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .then(
         res => {
           this.setState({
@@ -160,7 +180,11 @@ class ReviewContainer extends Component {
   }
 
   deleteComment = (e, id) => {
-    Axios.delete(`http://127.0.0.1:8000/review/${id}`)
+    Axios.delete(`http://127.0.0.1:8000/review/${id}`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .catch(e => console.log(e))
       .then(
         this.get_review()
@@ -168,7 +192,11 @@ class ReviewContainer extends Component {
   }
 
   deleteReComment = (e, id) => {
-    Axios.delete(`http://127.0.0.1:8000/review-comment/${id}`)
+    Axios.delete(`http://127.0.0.1:8000/review-comment/${id}`,{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
+    })
       .catch(e => console.log(e))
       .then(
         this.get_review()
@@ -182,6 +210,10 @@ class ReviewContainer extends Component {
       r_id: r_id,
       u_id: localStorage.getItem('user_id'),
       comment: data
+    },{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
     }).then(res => {
       console.log(res)
       this.get_review()
@@ -196,6 +228,10 @@ class ReviewContainer extends Component {
     Axios.put(`http://127.0.0.1:8000/review/${id}`,{
       comment: comment,
       star_score : star_score
+    },{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
     }).then(res => {
       this.get_review()      
     })
@@ -206,6 +242,10 @@ class ReviewContainer extends Component {
     e.preventDefault()
     Axios.put(`http://127.0.0.1:8000/review-comment/${id}`,{
       comment: comment,
+    },{
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
+      }
     }).then(res => {
       this.get_review()      
     })

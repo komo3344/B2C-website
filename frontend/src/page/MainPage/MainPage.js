@@ -20,18 +20,38 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/user/${localStorage.getItem('user_id')}`,{
-      headers:{
-        Accept: "application/json, text/plain, */*",
-        Authorization: `JWT ${localStorage.getItem('token')}`
-      }
-    }).then(
-      res => {
-        this.setState({
-          username: res.data.username
-        })
-        console.log(res)
-      }
+    axios.post('http://127.0.0.1:8000/api-token-refresh/', {
+      token: localStorage.getItem('token')
+    }).then(res => {
+      console.log(localStorage.getItem('token'))
+      localStorage.setItem('token', res.data.token)
+      console.log(localStorage.getItem('token'))
+      axios.get(`http://127.0.0.1:8000/current-user/`, {
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`
+        }
+      }).then(
+        res => { // 해당 토큰의 유저 정보를 불러와서 state에 정보 저장
+          if (res.data[0].role_profile === 1) {
+            this.setState({
+              type: 'B'
+            })
+          } else if (res.data[0].role_profile === 2) {
+            this.setState({
+              type: 'C'
+            })
+          }
+          else {
+            this.setState({
+              type: 'A'
+            })
+          }
+          this.setState({
+            username: res.data[0].username
+          })
+        }
+      ).catch(e => console.log(e))
+    }
     ).catch(e => console.log(e))
   }
 

@@ -7,7 +7,7 @@ import DetailStore from "../DetailStore/DetailStore";
 import axios from 'axios'
 
 class BodyContainer extends Component {
-  
+
 
   handle_addstore = (e, data) => {
     e.preventDefault()
@@ -17,6 +17,10 @@ class BodyContainer extends Component {
       business_number: data.businessNumber,
       title: data.title,
       content: data.storeIntroduce,
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
     }).then(res => {
       console.log(res)
       this.props.display_form('home')

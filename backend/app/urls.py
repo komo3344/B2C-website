@@ -8,6 +8,8 @@ urlpatterns = [
     path('rest-auth/registration/signup/', MyRegistrationView.as_view()),
     path('user/', views.UserList.as_view()),
     path('user/<int:pk>', views.UserDetail.as_view(), name='user-detail'),
+    path('current-user/', views.CurrentUser.as_view(), name='current-user'),
+
     path('store/', views.StoreList.as_view()),
     path('store/<int:pk>', views.StoreDetail.as_view(), name='store-detail'),
     path('mystore/', views.MyStoreDetail.as_view()),

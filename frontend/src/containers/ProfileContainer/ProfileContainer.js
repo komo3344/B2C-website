@@ -18,8 +18,8 @@ class ProfileContainer extends Component {
   componentDidMount() {
     console.log('working')
     axios.get("http://127.0.0.1:8000/mystore/",{
-      headers: {
-        Authorization: `Bearer jwt $${localStorage.getItem('token')}`
+      headers:{
+        Authorization : `jwt ${localStorage.getItem('token')}`
       }
     })
     .then(res =>{
