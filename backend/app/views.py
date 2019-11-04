@@ -1,5 +1,7 @@
 from rest_framework import generics, status
+from rest_framework.decorators import authentication_classes
 from rest_framework.response import Response
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .helpers import modify_input_for_multiple_files
 from . import models
@@ -20,18 +22,18 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.UserSerializer
 
 
-class StoreList(generics.ListCreateAPIView):    # 전체 가게리스트
+class StoreList(generics.ListCreateAPIView):  # 전체 가게리스트
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
 
 
-class StoreDetail(generics.RetrieveUpdateDestroyAPIView):   # 가게 정보 수정
+class StoreDetail(generics.RetrieveUpdateDestroyAPIView):  # 가게 정보 수정
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
 
 
-class MyStoreDetail(generics.ListCreateAPIView):    # 자신의 가게만 보여줌
+class MyStoreDetail(generics.ListCreateAPIView):  # 자신의 가게만 보여줌
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
@@ -40,12 +42,12 @@ class MyStoreDetail(generics.ListCreateAPIView):    # 자신의 가게만 보여
         return super().get_queryset().filter(u_id=self.request.user)
 
 
-class ReviewList(generics.ListCreateAPIView):   # 댓글 리스트
+class ReviewList(generics.ListCreateAPIView):  # 댓글 리스트
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
 
 
-class StoreReviewList(generics.ListAPIView):   # 해당가게 댓글 리스트
+class StoreReviewList(generics.ListAPIView):  # 해당가게 댓글 리스트
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
     lookup_url_kwarg = 's_id'
@@ -56,7 +58,7 @@ class StoreReviewList(generics.ListAPIView):   # 해당가게 댓글 리스트
         return review
 
 
-class StoreReviewCommentList(generics.ListAPIView):   # 해당가게 대댓글 리스트
+class StoreReviewCommentList(generics.ListAPIView):  # 해당가게 대댓글 리스트
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
     lookup_url_kwarg = 's_id'
@@ -73,7 +75,7 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):  # 댓글 수정
     serializer_class = serializers.ReviewSerializer
 
 
-class ReviewComment(generics.ListCreateAPIView):    # 사장님 답글
+class ReviewComment(generics.ListCreateAPIView):  # 사장님 답글
     permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
