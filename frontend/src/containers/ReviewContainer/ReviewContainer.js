@@ -13,6 +13,12 @@ class ReviewContainer extends Component {
     re_re: []
   }
 
+  handleImageChange = e => {
+    this.setState({
+      image: e.target.files[0]
+    })
+  }
+
   handle_change = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -23,7 +29,9 @@ class ReviewContainer extends Component {
     });
   };
 
-  handle_C_review_create = (e, comment, star_score) => {
+  handle_C_review_create = (e, comment, star_score, img) => {
+    var formData = new FormData();
+    console.log(img)
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review/', {
       comment: comment,
@@ -35,9 +43,24 @@ class ReviewContainer extends Component {
         Authorization : `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      this.get_review()
-      $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
-
+      if(img) {
+      formData.append('r_id',res.data.id)
+      formData.append('image',img)
+      formData.append('filename','')
+      formData.append('original_name',img.name)
+      Axios.post('http://127.0.0.1:8000/review-file/',formData,{
+        headers:{
+          Authorization : `jwt ${localStorage.getItem('token')}`
+        }
+      }).then(res => {
+        this.get_review()
+        $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
+      })
+      .catch(e => console.log(e))}
+      else {
+        this.get_review()
+        $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
+      }
     }).catch(e => { console.log(e) })
   }
 
@@ -258,10 +281,17 @@ class ReviewContainer extends Component {
       <div>
         <h3>리뷰우</h3>
         {this.props.type === 'C' &&
-          <form id='commentCreate' onSubmit={(e) => { this.handle_C_review_create(e, this.state.comment, this.state.star_score) }}>
+          <form id='commentCreate' onSubmit={(e) => { this.handle_C_review_create(e, this.state.comment, this.state.star_score, this.state.image) }}>
             <input type='number' onChange={this.handle_change} name='star_score' min="1" max="5" placeholder='별점'></input>
             <textarea rows='8' onChange={this.handle_change} cols='60' placeholder='댓글 내용을 작성해주세요!' name='comment' required></textarea>
-            <input type='file'></input>
+            <input
+              ref="file"
+              id="image"
+              accept="image/*"
+              type="file"
+              name="image"
+              onChange={this.handleImageChange}
+            />
             <button type='submit'>작성하기</button>
           </form>
         }

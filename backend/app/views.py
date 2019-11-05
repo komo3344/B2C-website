@@ -64,7 +64,6 @@ class ReviewList(generics.ListCreateAPIView):  # 댓글 리스트
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-
 class StoreReviewList(generics.ListAPIView):  # 해당가게 댓글 리스트
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer

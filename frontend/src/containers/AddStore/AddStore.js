@@ -51,7 +51,6 @@ class AddStore extends Component {
           <label>
             가게 이미지 :
             <input
-              multiple
               ref="file"
               id="image"
               accept="image/*"

@@ -15,7 +15,6 @@ class DetailStore extends Component {
       }
     })
       .then(res => {
-        console.log(res)
         this.setState({
           store: res.data,
         })
@@ -91,7 +90,6 @@ class DetailStore extends Component {
   }
 
   render() {
-    console.log(this.state)
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>

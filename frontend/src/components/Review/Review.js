@@ -1,15 +1,29 @@
 import React, { useState } from 'react'
-import logo from '../../image/certifying_shot.jpg'
 import './Review.css'
+import Axios from 'axios'
 
 const Review = (props) => {
   const [B_edit_comment, set_B_edit_comment] = useState()       // 사장 댓글 수정 state
   const [C_edit_comment, set_C_edit_comment] = useState()       // 고객 댓글 내용 수정 state
   const [C_edit_star_score, setC_edit_star_score] = useState()  // 고객 댓글 평점 수정 state
   const [B_create_comment, set_B_create_comment] = useState()   // 사장 댓글 생성 state
+  const [image, set_image] = useState()
   const reviews = props.re
   const re_reviews = props.re_re
 
+  Axios.get('http://127.0.0.1:8000/review-file/',{
+    headers:{
+      Authorization : `jwt ${localStorage.getItem('token')}`
+    }
+  })
+  .then(
+    res => {
+      console.log(res)
+      if(res.data.length > 0){
+        set_image(res.data[0].image)
+      }
+    }
+  )
 
   const onChangeCreateComment_B = e => {
     set_B_create_comment(e.target.value)
@@ -30,7 +44,9 @@ const Review = (props) => {
       <ul>
         <h1>댓글</h1>
         <ul>
-          <img width='300px' height='100px' src={logo} alt='프로필사진못찾으면 뜨는 글' />
+          {image &&
+          <img width='300px' height='100px' src={image} alt='프로필사진못찾으면 뜨는 글' />
+          }
         </ul>
         <li>댓글 id :{review.id}</li>
         <li>댓글 가게 id : {review.s_id}</li>
