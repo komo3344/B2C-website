@@ -14,7 +14,6 @@ class BodyContainer extends Component {
     e.preventDefault()
 
     var formData = new FormData();
-    console.log(data.image)
     formData.append('u_id',localStorage.getItem('user_id'))
     formData.append('store_name',data.storeName)
     formData.append('business_number',data.businessNumber)
@@ -45,6 +44,8 @@ class BodyContainer extends Component {
       alert('자신의 가게만 삭제 가능합니다')
     })
   }
+
+
 
   render() {
     if (this.props.displayed_form === 'home') {

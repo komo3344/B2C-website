@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Review } from '../../components'
-// import logo from '../../image/certifying_shot.jpg'
 import Axios from 'axios';
 import $ from "jquery";
-// window.$ = window.jQuery = jQuery;
 
 
 class ReviewContainer extends Component {
@@ -325,7 +323,7 @@ class ReviewContainer extends Component {
         {this.props.type === 'C' &&
           <form id='commentCreate' onSubmit={(e) => { 
             this.handle_C_review_create(e, this.state.comment, this.state.star_score, this.state.image) 
-            this.setState({
+            this.setState({ //이전에 들어갔던 image 정보를 제거
               image: ''
             })
             }}>
