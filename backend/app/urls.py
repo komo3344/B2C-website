@@ -24,7 +24,8 @@ urlpatterns = [
 
     path('review-file/', views.ReviewFile.as_view()),
     path('review-file/<int:pk>', views.ReviewFileDetail.as_view(), name='review_file-detail'),
-    path('review-file2/', views.ImageView.as_view()),
+    path('review-files/', views.ImageView.as_view()),
+    path('store-file/', views.StoreImageView.as_view()),
 
 ]
 

@@ -3,7 +3,7 @@ from rest_framework.decorators import authentication_classes
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from .helpers import modify_input_for_multiple_files
+from .helpers import modify_input_for_multiple_files, store_modify_input_for_multiple_files
 from . import models
 from . import serializers
 from .models import User, Store
@@ -122,6 +122,11 @@ class ReviewFileDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ReviewFileSerializer
 
 
+class StoreFile(generics.ListCreateAPIView):
+    queryset = models.Store_file.objects.all()
+    serializer_class = serializers.ReviewFileSerializer
+
+
 class ImageView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
@@ -131,16 +136,47 @@ class ImageView(APIView):
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request, *args, **kwargs):
-        filename = request.data['filename']
-        original_name = request.data['original_name']
+        #filename = request.data['filename']
+        #original_name = request.data['original_name']
+        r_id = request.data['r_id']
         # converts querydict to original dict
         images = dict((request.data).lists())['image']
         flag = 1
         arr = []
         for img_name in images:
-            modified_data = modify_input_for_multiple_files(filename, original_name,
-                                                            img_name)
+            modified_data = modify_input_for_multiple_files(r_id, img_name)
             file_serializer = serializers.ReviewFileSerializer(data=modified_data)
+            if file_serializer.is_valid():
+                file_serializer.save()
+                arr.append(file_serializer.data)
+            else:
+                flag = 0
+
+        if flag == 1:
+            return Response(arr, status=status.HTTP_201_CREATED)
+        else:
+            return Response(arr, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StoreImageView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request):
+        all_images = models.Store_file.objects.all()
+        serializer = serializers.StoreFileSerializer(all_images, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    def post(self, request, *args, **kwargs):
+        #filename = request.data['filename']
+        #original_name = request.data['original_name']
+        s_id = request.data['s_id']
+        # converts querydict to original dict
+        images = dict((request.data).lists())['image']
+        flag = 1
+        arr = []
+        for img_name in images:
+            modified_data = store_modify_input_for_multiple_files(s_id, img_name)
+            file_serializer = serializers.StoreFileSerializer(data=modified_data)
             if file_serializer.is_valid():
                 file_serializer.save()
                 arr.append(file_serializer.data)
