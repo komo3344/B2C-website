@@ -10,13 +10,13 @@ class ReviewContainer extends Component {
     re_re: [],
   }
 
-  handleImageChange = e => {
+  handleImageChange = e => { //이미지 등록시 state에 정보 저장
     this.setState({
       image: e.target.files[0]
     })
   }
 
-  handle_change = e => {
+  handle_change = e => { // input data 변경시 state 에 정보 저장
     const name = e.target.name;
     const value = e.target.value;
     this.setState(prevstate => {
@@ -26,7 +26,7 @@ class ReviewContainer extends Component {
     });
   };
 
-  handle_C_review_create = (e, comment, star_score, img) => {
+  handle_C_review_create = (e, comment, star_score, img) => { //고객 리뷰 작성 핸들러 (이미지 포함)
     var formData = new FormData();
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review/', {
@@ -61,7 +61,7 @@ class ReviewContainer extends Component {
     }).catch(e => { console.log(e) })
   }
 
-  get_review = () => {
+  get_review = () => { // 리뷰 리랜딩을 위한 함수
     var list
     Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`, {
       headers: {
@@ -111,7 +111,7 @@ class ReviewContainer extends Component {
       )
   }
 
-  componentDidMount() {
+  componentDidMount() { // 컴포넌트가 랜더될때 필요한 정보 get
     var list
     Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`, {
       headers: {
@@ -161,22 +161,7 @@ class ReviewContainer extends Component {
       )
   }
 
-  doDisplay = () => {
-    var con = document.getElementById("myDIV")
-    var con2 = document.getElementById("comment_button")
-    if (con.style.display === 'none') {
-      con.style.display = 'block'
-    } else {
-      con.style.display = 'none'
-    }
-    if (con2.style.display === 'block') {
-      con2.style.display = 'none'
-    } else {
-      con2.style.display = 'block'
-    }
-  }
-
-  doEdit_C = (id) => {
+  doEdit_C = (id) => { // 고객 댓글 수정시 display 관리
     var C_comment = document.getElementById(`C_comment_${id}`)
     var C_comment_edit = document.getElementById(`C_comment_edit_${id}`)
     var C_comment_buttons = document.getElementById(`C_comment_buttons_${id}`)
@@ -200,7 +185,7 @@ class ReviewContainer extends Component {
     }
   }
 
-  doCreate_B = (id) => {
+  doCreate_B = (id) => { // 사장 댓글 생성시 display 관리
     var B_comment_create = document.getElementById(`B_comment_create_${id}`)
     var B_comment_create_buttons = document.getElementById(`B_comment_create_buttons_${id}`)
 
@@ -217,7 +202,7 @@ class ReviewContainer extends Component {
     }
   }
 
-  doEdit_B = (id) => {
+  doEdit_B = (id) => { // 사장 댓글 수정시 display 관리
     var B_comment = document.getElementById(`B_comment_${id}`)
     var B_comment_edit = document.getElementById(`B_comment_edit_${id}`)
     var B_comment_buttons = document.getElementById(`B_comment_buttons_${id}`)
@@ -241,7 +226,7 @@ class ReviewContainer extends Component {
     }
   }
 
-  deleteComment = (e, id) => {
+  deleteComment = (e, id) => { // 댓글 삭제 함수
     Axios.delete(`http://127.0.0.1:8000/review/${id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -254,7 +239,7 @@ class ReviewContainer extends Component {
       )
   }
 
-  deleteReComment = (e, id) => {
+  deleteReComment = (e, id) => { // 대댓글 삭제 함수
     Axios.delete(`http://127.0.0.1:8000/review-comment/${id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -266,7 +251,7 @@ class ReviewContainer extends Component {
       )
   }
 
-  handle_B_comment_create = (e, data, r_id, r_r_id) => {
+  handle_B_comment_create = (e, data, r_id, r_r_id) => { // 사장 댓글 생성 함수
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review-comment/', {
       s_id: this.props.store_id,
@@ -286,7 +271,7 @@ class ReviewContainer extends Component {
     )
   }
 
-  handle_C_comment_edit = (e, id, comment, star_score) => {
+  handle_C_comment_edit = (e, id, comment, star_score) => { // 고객 댓글 수정 함수
     e.preventDefault()
     Axios.put(`http://127.0.0.1:8000/review/${id}`, {
       comment: comment,
@@ -301,7 +286,7 @@ class ReviewContainer extends Component {
       .catch(e => console.log(e))
   }
 
-  handle_B_comment_edit = (e, id, comment) => {
+  handle_B_comment_edit = (e, id, comment) => { // 사장 댓글 수정 함수
     e.preventDefault()
     Axios.put(`http://127.0.0.1:8000/review-comment/${id}`, {
       comment: comment,
