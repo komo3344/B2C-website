@@ -8,9 +8,8 @@ import $ from "jquery";
 
 class ReviewContainer extends Component {
   state = { // this.props.store_id 를 가지고 해당 게시물의 리뷰 데이터 (Review, Review_file, Review_comment 데이터를 전부 불러옴)
-    Review: [], //리뷰 하드코딩
     re: [],
-    re_re: []
+    re_re: [],
   }
 
   handleImageChange = e => {
@@ -31,32 +30,32 @@ class ReviewContainer extends Component {
 
   handle_C_review_create = (e, comment, star_score, img) => {
     var formData = new FormData();
-    console.log(img)
     e.preventDefault()
     Axios.post('http://127.0.0.1:8000/review/', {
       comment: comment,
       star_score: star_score,
       s_id: this.props.store_id,
       u_id: localStorage.getItem('user_id')
-    },{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      if(img) {
-      formData.append('r_id',res.data.id)
-      formData.append('image',img)
-      formData.append('filename','')
-      formData.append('original_name',img.name)
-      Axios.post('http://127.0.0.1:8000/review-file/',formData,{
-        headers:{
-          Authorization : `jwt ${localStorage.getItem('token')}`
-        }
-      }).then(res => {
-        this.get_review()
-        $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
-      })
-      .catch(e => console.log(e))}
+      if (img) {
+        formData.append('r_id', res.data.id)
+        formData.append('image', img)
+        formData.append('filename', '')
+        formData.append('original_name', img.name)
+        Axios.post('http://127.0.0.1:8000/review-file/', formData, {
+          headers: {
+            Authorization: `jwt ${localStorage.getItem('token')}`
+          }
+        }).then(res => {
+          this.get_review()
+          $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
+        })
+          .catch(e => console.log(e))
+      }
       else {
         this.get_review()
         $("#commentCreate")[0].reset(); //댓글 작성시 form에 있는 데이터 비우는 제이쿼리
@@ -65,22 +64,44 @@ class ReviewContainer extends Component {
   }
 
   get_review = () => {
-    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    var list
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
-      .then(
-        res => {
-          this.setState({
-            Review: res.data,
-            re: res.data
-          })
-        }
-      )
-    Axios.get(`http://127.0.0.1:8000/review-comment`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    .then(
+      res => {
+        this.setState({
+          Review: res.data,
+          re: res.data
+        })
+        Axios.get('http://127.0.0.1:8000/review-file/', {
+          headers: {
+            Authorization: `jwt ${localStorage.getItem('token')}`
+          }
+        })
+          .then(
+            res => {
+              var re_list = this.state.re
+              list = res.data
+              for(let i = 0; i < list.length ; i++){
+                for(let j = 0 ; j < re_list.length ; j++){
+                  if (list[i].r_id === re_list[j].id){
+                    re_list[j]['image'] = list[i]
+                  }
+                }
+              }
+              this.setState({
+                re : re_list
+              })
+            }
+          ).catch(e=>console.log(e))
+      }
+    )
+    Axios.get(`http://127.0.0.1:8000/review-comment`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
       .then(
@@ -92,25 +113,45 @@ class ReviewContainer extends Component {
       )
   }
 
-
-
   componentDidMount() {
-    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    var list
+    Axios.get(`http://127.0.0.1:8000/review/store/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
-      .then(
-        res => {
-          this.setState({
-            Review: res.data,
-            re: res.data
-          })
-        }
-      )
-    Axios.get(`http://127.0.0.1:8000/review-comment`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    .then(
+      res => {
+        this.setState({
+          Review: res.data,
+          re: res.data
+        })
+        Axios.get('http://127.0.0.1:8000/review-file/', {
+          headers: {
+            Authorization: `jwt ${localStorage.getItem('token')}`
+          }
+        })
+          .then(
+            res => {
+              var re_list = this.state.re
+              list = res.data
+              for(let i = 0; i < list.length ; i++){
+                for(let j = 0 ; j < re_list.length ; j++){
+                  if (list[i].r_id === re_list[j].id){
+                    re_list[j]['image'] = list[i]
+                  }
+                }
+              }
+              this.setState({
+                re : re_list
+              })
+            }
+          ).catch(e=>console.log(e))
+      }
+    )
+    Axios.get(`http://127.0.0.1:8000/review-comment`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
       .then(
@@ -203,21 +244,22 @@ class ReviewContainer extends Component {
   }
 
   deleteComment = (e, id) => {
-    Axios.delete(`http://127.0.0.1:8000/review/${id}`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    Axios.delete(`http://127.0.0.1:8000/review/${id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
       .catch(e => console.log(e))
-      .then(
+      .then(res => {
         this.get_review()
+      }
       )
   }
 
   deleteReComment = (e, id) => {
-    Axios.delete(`http://127.0.0.1:8000/review-comment/${id}`,{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    Axios.delete(`http://127.0.0.1:8000/review-comment/${id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
       .catch(e => console.log(e))
@@ -233,9 +275,9 @@ class ReviewContainer extends Component {
       r_id: r_id,
       u_id: localStorage.getItem('user_id'),
       comment: data
-    },{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
       console.log(res)
@@ -248,40 +290,45 @@ class ReviewContainer extends Component {
 
   handle_C_comment_edit = (e, id, comment, star_score) => {
     e.preventDefault()
-    Axios.put(`http://127.0.0.1:8000/review/${id}`,{
+    Axios.put(`http://127.0.0.1:8000/review/${id}`, {
       comment: comment,
-      star_score : star_score
-    },{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+      star_score: star_score
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      this.get_review()    
+      this.get_review()
     })
-    .catch(e => console.log(e))
+      .catch(e => console.log(e))
   }
 
   handle_B_comment_edit = (e, id, comment) => {
     e.preventDefault()
-    Axios.put(`http://127.0.0.1:8000/review-comment/${id}`,{
+    Axios.put(`http://127.0.0.1:8000/review-comment/${id}`, {
       comment: comment,
-    },{
-      headers:{
-        Authorization : `jwt ${localStorage.getItem('token')}`
+    }, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      this.get_review()      
+      this.get_review()
     })
-    .catch(e => console.log(e))
+      .catch(e => console.log(e))
   }
-  
+
 
   render() {
     return (
       <div>
         <h3>리뷰우</h3>
         {this.props.type === 'C' &&
-          <form id='commentCreate' onSubmit={(e) => { this.handle_C_review_create(e, this.state.comment, this.state.star_score, this.state.image) }}>
+          <form id='commentCreate' onSubmit={(e) => { 
+            this.handle_C_review_create(e, this.state.comment, this.state.star_score, this.state.image) 
+            this.setState({
+              image: ''
+            })
+            }}>
             <input type='number' onChange={this.handle_change} name='star_score' min="1" max="5" placeholder='별점'></input>
             <textarea rows='8' onChange={this.handle_change} cols='60' placeholder='댓글 내용을 작성해주세요!' name='comment' required></textarea>
             <input
@@ -296,7 +343,6 @@ class ReviewContainer extends Component {
           </form>
         }
         <Review
-          data={this.state.Review}
           type={this.props.type}
           doCreate_B={this.doCreate_B}
           doEdit_C={this.doEdit_C}
