@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../../image/ckicken.jpg'
 import ReviewContainer from '../ReviewContainer/ReviewContainer'
 import './DetailStore.css'
 import axios from 'axios'
@@ -16,6 +15,7 @@ class DetailStore extends Component {
       }
     })
       .then(res => {
+        console.log(res)
         this.setState({
           store: res.data,
         })
@@ -75,7 +75,6 @@ class DetailStore extends Component {
 
   handle_info_edit = (e, store_name, business_number, title, content) => {
     e.preventDefault()
-    console.log(store_name, business_number, title, content)
     axios.put(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
       store_name: store_name,
       business_number: business_number,
@@ -92,12 +91,13 @@ class DetailStore extends Component {
   }
 
   render() {
+    console.log(this.state)
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img src={logo} alt='가게 사진' />
+          <img style={{width:200 ,height:200}} src={this.state.store.image} alt='가게 사진' />
           <p>가게 이름 : {this.state.store.store_name}</p>
           <p>가게 게시물 제목 : {this.state.store.title}</p>
           <p>가게 내용 : {this.state.store.content}</p>
@@ -111,7 +111,7 @@ class DetailStore extends Component {
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img src={logo} alt='가게 사진' />
+          <img style={{width:200 ,height:200}} src={this.state.store.image} alt='가게 사진' />
           <button>사진 바꾸기</button>
           <div id='store_info'>
             <p>가게 이름 : {this.state.store.store_name}</p>

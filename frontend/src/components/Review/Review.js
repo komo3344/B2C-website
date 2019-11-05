@@ -3,10 +3,10 @@ import logo from '../../image/certifying_shot.jpg'
 import './Review.css'
 
 const Review = (props) => {
-  const [B_edit_comment, set_B_edit_comment] = useState()
-  const [C_edit_comment, set_C_edit_comment] = useState()
-  const [C_edit_star_score, setC_edit_star_score] = useState()
-  const [B_create_comment, set_B_create_comment] = useState()
+  const [B_edit_comment, set_B_edit_comment] = useState()       // 사장 댓글 수정 state
+  const [C_edit_comment, set_C_edit_comment] = useState()       // 고객 댓글 내용 수정 state
+  const [C_edit_star_score, setC_edit_star_score] = useState()  // 고객 댓글 평점 수정 state
+  const [B_create_comment, set_B_create_comment] = useState()   // 사장 댓글 생성 state
   const reviews = props.re
   const re_reviews = props.re_re
 

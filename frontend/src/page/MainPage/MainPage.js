@@ -47,6 +47,7 @@ class MainPage extends Component {
           this.setState({
             username: res.data[0].username
           })
+          localStorage.setItem('user_id',res.data[0].id)
         }
       ).catch(e => console.log(e))
     }

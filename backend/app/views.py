@@ -35,14 +35,6 @@ class StoreList(generics.ListCreateAPIView):  # 전체 가게리스트
     queryset = models.Store.objects.all()
     serializer_class = serializers.StoreSerializer
 
-    def create(self, request, *args, **kwargs):
-        request.data['u_id'] = request.user.id
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
 class StoreDetail(generics.RetrieveUpdateDestroyAPIView):  # 가게 정보 수정
     permission_classes = [IsOwnerOrReadOnly]

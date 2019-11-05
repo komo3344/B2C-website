@@ -14,11 +14,20 @@ class AddStore extends Component {
     });
   };
 
+  handleImageChange = e => {
+    this.setState({
+      image: e.target.files[0]
+    })
+  }
+
   render() {
     return (
       <div>
         가게 추가
-        <form onSubmit={(e) => { this.props.handle_addstore(e, this.state) }} >
+        <form encType="multipart/form-data" onSubmit={
+          (e) => {
+            this.props.handle_addstore(e, this.state)
+          }} >
           <label>
             게시물 제목 :
           <input type="text" value={this.state.title} onChange={this.handle_change} name='title' />
@@ -41,7 +50,15 @@ class AddStore extends Component {
 
           <label>
             가게 이미지 :
-            <input type="file" multiple />
+            <input
+              multiple
+              ref="file"
+              id="image"
+              accept="image/*"
+              type="file"
+              name="image"
+              onChange={this.handleImageChange}
+            />
           </label>
           <br />
           <button type='submit'>등록하기</button>

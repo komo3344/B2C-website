@@ -5,19 +5,23 @@ import AddStore from '../AddStore/AddStore'
 import { Redirect } from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
 import axios from 'axios'
+import FormData from 'form-data'
 
 class BodyContainer extends Component {
 
 
   handle_addstore = (e, data) => {
     e.preventDefault()
-    axios.post('http://127.0.0.1:8000/store/', {
-      u_id: localStorage.getItem('user_id'),
-      store_name: data.storeName,
-      business_number: data.businessNumber,
-      title: data.title,
-      content: data.storeIntroduce,
-    }, {
+
+    var formData = new FormData();
+    console.log(data.image)
+    formData.append('u_id',localStorage.getItem('user_id'))
+    formData.append('store_name',data.storeName)
+    formData.append('business_number',data.businessNumber)
+    formData.append('title',data.title)
+    formData.append('content',data.storeIntroduce)
+    formData.append('image',data.image)
+    axios.post('http://127.0.0.1:8000/store/', formData , {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
