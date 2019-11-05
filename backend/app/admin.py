@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Store, Review, Review_file, Review_comment
+from .models import User, Store, Review, Review_file, Review_comment, Store_file
 from django.db.models import Avg
 
 
@@ -92,3 +92,5 @@ admin.site.register(Store, StoreAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(Review_file, ReviewFileAdmin)
 admin.site.register(Review_comment, Review_comment_Admin)
+admin.site.register(Store_file)
+

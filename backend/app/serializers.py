@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 
 from .models import User, Store, Review, Review_comment, \
-    Review_file
+    Review_file, Store_file
 
 
 class MyRegistrationSerializer(RegisterSerializer):
@@ -79,8 +79,12 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 class ReviewFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review_file
-        fields = ('id', 'r_id',
-                  'filename', 'original_name', 'image'
+        fields = ('id', 'r_id', 'image'
                   )
 
 
+class StoreFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Store_file
+        fields = ('id', 's_id', 'image'
+                  )
