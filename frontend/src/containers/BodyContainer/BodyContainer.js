@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
 import axios from 'axios'
 import FormData from 'form-data'
+import URL from '../../URL/URL'
 
 class BodyContainer extends Component {
 
@@ -19,7 +20,7 @@ class BodyContainer extends Component {
     formData.append('business_number', data.businessNumber)
     formData.append('title', data.title)
     formData.append('content', data.storeIntroduce)
-    axios.post('http://127.0.0.1:8000/store/', formData, {
+    axios.post(URL.storelist, formData, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -29,7 +30,7 @@ class BodyContainer extends Component {
       for (let i = 0; i < files.length; i++) {
         formImgData.append('image', files[i])
       }
-      axios.post(`http://127.0.0.1:8000/store-file/`, formImgData, {
+      axios.post(URL.storefile, formImgData, {
         headers: {
           Authorization: `jwt ${localStorage.getItem('token')}`
         }
@@ -38,6 +39,21 @@ class BodyContainer extends Component {
           this.props.display_form('home')
         }).catch(e => console.log(e))
     }).catch(e => console.log(e))
+  }
+
+  handle_deletestore = (e, store_id) => {
+    axios.delete(`${URL.storelist}${store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => {
+      this.props.display_form('profile')
+    })
+    .catch(e => {
+      console.log(e)
+      alert('자신의 가게만 삭제 가능합니다')
+    })
   }
 
   render() {

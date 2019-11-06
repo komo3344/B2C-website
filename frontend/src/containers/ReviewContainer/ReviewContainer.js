@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Review } from '../../components'
 import Axios from 'axios';
 import $ from "jquery";
+import URL from '../../URL/URL'
 
 
 class ReviewContainer extends Component {
@@ -29,7 +30,7 @@ class ReviewContainer extends Component {
   handle_C_review_create = (e, comment, star_score, img) => { //고객 리뷰 작성 핸들러 (이미지 포함)
     var formData = new FormData();
     e.preventDefault()
-    Axios.post('http://127.0.0.1:8000/review/', {
+    Axios.post(URL.review, {
       comment: comment,
       star_score: star_score,
       s_id: this.props.store_id,
@@ -44,7 +45,7 @@ class ReviewContainer extends Component {
         formData.append('image', img)
         formData.append('filename', '')
         formData.append('original_name', img.name)
-        Axios.post('http://127.0.0.1:8000/review-file/', formData, {
+        Axios.post(URL.reviewfile, formData, {
           headers: {
             Authorization: `jwt ${localStorage.getItem('token')}`
           }
@@ -288,7 +289,7 @@ class ReviewContainer extends Component {
 
   handle_B_comment_edit = (e, id, comment) => { // 사장 댓글 수정 함수
     e.preventDefault()
-    Axios.put(`http://127.0.0.1:8000/review-comment/${id}`, {
+    Axios.put(`${URL.re_review}${id}`, {
       comment: comment,
     }, {
       headers: {

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import './MainPage.css'
 import { BodyContainer, BodyContainer2 } from '../../containers';
 import axios from 'axios';
+import URL from '../../URL/URL'
 
 class MainPage extends Component {
   state = {
@@ -20,11 +21,11 @@ class MainPage extends Component {
   };
 
   componentDidMount() {
-    axios.post('http://127.0.0.1:8000/api-token-refresh/', {
+    axios.post(URL.token_refresh, {
       token: localStorage.getItem('token')
     }).then(res => {
       localStorage.setItem('token', res.data.token)
-      axios.get(`http://127.0.0.1:8000/current-user/`, {
+      axios.get(URL.currentuser, {
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`
         }

@@ -3,6 +3,7 @@ import ReviewContainer from '../ReviewContainer/ReviewContainer'
 import './DetailStore.css'
 import axios from 'axios'
 import FormData from 'form-data'
+import URL from '../../URL/URL'
 
 class DetailStore extends Component {
   state = {
@@ -12,7 +13,7 @@ class DetailStore extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+    axios.get(`${URL.mystorefile}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -22,7 +23,7 @@ class DetailStore extends Component {
       })
     })
     .catch(e => console.log(e))
-    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
+    axios.get(`${URL.storelist}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -37,7 +38,7 @@ class DetailStore extends Component {
   }
 
   handle_get_store = () => {
-    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+    axios.get(`${URL.mystorefile}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -46,7 +47,7 @@ class DetailStore extends Component {
         storeImg : res.data
       })
     })
-    axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
+    axios.get(`${URL.storelist}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -126,7 +127,7 @@ class DetailStore extends Component {
   edit_store_image = (e) => {
     e.preventDefault()
     var pre_img
-    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+    axios.get(`${URL.mystorefile}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
@@ -134,7 +135,7 @@ class DetailStore extends Component {
       .then(res => {
         pre_img = res.data
         for(let i = 0 ; i < pre_img.length ; i++){
-          axios.delete(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}/${pre_img[i].id}`, {
+          axios.delete(`${URL.mystorefile}${this.props.store_id}/${pre_img[i].id}`, {
             headers: {
               Authorization: `jwt ${localStorage.getItem('token')}`
             }
@@ -148,7 +149,7 @@ class DetailStore extends Component {
       formData.append('image', files[i])
     }
     formData.append('s_id',this.props.store_id)
-    axios.post(`http://127.0.0.1:8000/store-file/`, formData, {
+    axios.post(`${URL.storefile}`, formData, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }

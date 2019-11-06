@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StoreList, ProfileImage, ProfileIntroduce } from '../../components';
 import './ProfileContainer.css'
 import axios from "axios";
+import URL from '../../URL/URL'
 
 class ProfileContainer extends Component {
   state = {
@@ -14,7 +15,7 @@ class ProfileContainer extends Component {
     ]
   }
   componentDidMount() {
-    axios.get("http://127.0.0.1:8000/mystore/",{
+    axios.get(URL.mystore,{
       headers:{
         Authorization : `jwt ${localStorage.getItem('token')}`
       }

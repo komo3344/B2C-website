@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StoreList } from '../../components'
 import './Body.css'
 import axios from "axios";
+import URL from '../../URL/URL'
 
 class Body extends Component {
   state = {
@@ -9,7 +10,7 @@ class Body extends Component {
   }
 
   componentDidMount () {
-    axios.get("http://127.0.0.1:8000/store",{
+    axios.get(URL.storelist,{
       headers:{
         Authorization : `jwt ${localStorage.getItem('token')}`
       }

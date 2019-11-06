@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { Login, Signup } from '../containers'
 import axios from "axios";
+import URL from '../URL/URL'
 
 class AuthPage extends Component {
   state = {
@@ -19,7 +20,7 @@ class AuthPage extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault()
-    axios.post('http://127.0.0.1:8000/api-token-auth/',{
+    axios.post(URL.token_auth,{
       username: data.id,
       password: data.password
     })
@@ -37,7 +38,7 @@ class AuthPage extends Component {
       type = true
     } else type = false
     e.preventDefault()
-    axios.post('http://127.0.0.1:8000/rest-auth/registration/signup/',{
+    axios.post(URL.signup,{
       username: data.id,
       password1: data.password,
       password2: data.password_check,
