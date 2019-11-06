@@ -13,3 +13,4 @@ backend/.idea/modules.xml
 backend/.idea/vcs.xml
 backend/.idea/inspectionProfiles/profiles_settings.xml
 backend/media/
+backend/app/migrations/0003_auto_20191105_1735.py

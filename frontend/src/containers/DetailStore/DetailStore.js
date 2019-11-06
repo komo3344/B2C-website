@@ -119,16 +119,12 @@ class DetailStore extends Component {
   edit_store_image = (e) => {
     var files = document.getElementById("image_input").files
     e.preventDefault()
+    
     var formData = new FormData();
     for(let i = 0 ; i < files.length; i ++){
       formData.append('image', files[i])
     }
     formData.append('s_id',this.props.store_id)
-    // formData.append('store_name',this.state.store.store_name)
-    // formData.append('business_number',this.state.store.business_number)
-    // formData.append('title',this.state.store.title)
-    // formData.append('content',this.state.store.content)
-    // formData.append('image', this.state.image)
     axios.post(`http://127.0.0.1:8000/store-file/`, formData, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`

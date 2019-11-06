@@ -23,7 +23,7 @@ class BodyContainer extends Component {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
-    }).then(res => {
+    }).then(res => { // 가게 생성후에 store-file 데이터 입력
       var formImgData = new FormData();
       formImgData.append('s_id', res.data.id)
       for (let i = 0; i < files.length; i++) {
@@ -35,33 +35,10 @@ class BodyContainer extends Component {
         }
       })
         .then(res => {
-          console.log(res)
-        })
-        .catch(e => console.log(e))
-
-      this.props.display_form('home')
-    }).catch(e => {
-      console.log(e)
-    })
-
-
+          this.props.display_form('home')
+        }).catch(e => console.log(e))
+    }).catch(e => console.log(e))
   }
-
-  handle_deletestore = (e, store_id) => {
-    axios.delete(`http://127.0.0.1:8000/store/${store_id}`, {
-      headers: {
-        Authorization: `jwt ${localStorage.getItem('token')}`
-      }
-    })
-      .then(res => {
-        this.props.display_form('profile')
-      })
-      .catch(e => {
-        alert('자신의 가게만 삭제 가능합니다')
-      })
-  }
-
-
 
   render() {
     if (this.props.displayed_form === 'home') {
