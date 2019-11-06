@@ -17,11 +17,9 @@ class DetailStore extends Component {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      console.log(res)
       this.setState({
         storeImg : res.data
       })
-      console.log(this.state.storeImg)
     })
     .catch(e => console.log(e))
     axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
@@ -39,6 +37,15 @@ class DetailStore extends Component {
   }
 
   handle_get_store = () => {
+    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      this.setState({
+        storeImg : res.data
+      })
+    })
     axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -117,9 +124,25 @@ class DetailStore extends Component {
   }
 
   edit_store_image = (e) => {
-    var files = document.getElementById("image_input").files
     e.preventDefault()
-    
+    var pre_img
+    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => {
+        pre_img = res.data
+        for(let i = 0 ; i < pre_img.length ; i++){
+          axios.delete(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}/${pre_img[i].id}`, {
+            headers: {
+              Authorization: `jwt ${localStorage.getItem('token')}`
+            }
+          })
+          .catch(e => {console.log(e)})
+        }
+      }).catch(e => console.log(e))
+    var files = document.getElementById("image_input").files
     var formData = new FormData();
     for(let i = 0 ; i < files.length; i ++){
       formData.append('image', files[i])
@@ -180,6 +203,7 @@ class DetailStore extends Component {
                 type="file"
                 name="image"
                 multiple
+                required
               />
               <button type='submit'>바꾸기</button>
             </form>}
