@@ -212,6 +212,8 @@ class DetailStore extends Component {
             <p>사업자 번호 : {this.state.store.business_number}</p>
             <p>가게 게시물 제목 : {this.state.store.title}</p>
             <p>가게 내용 : {this.state.store.content}</p>
+            <p>가게 댓글 수 : {this.state.store.reviews_count}</p>
+            <p>가게 평점 : {this.state.store.average_star_score}</p>
           </div>
           <div id='edit_store_info'>
             <form onSubmit={(e) => {
