@@ -1,12 +1,9 @@
 from rest_framework import generics, status
-from rest_framework.decorators import authentication_classes
 from rest_framework.response import Response
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .helpers import modify_input_for_multiple_files, store_modify_input_for_multiple_files
 from . import models
 from . import serializers
-from .models import User, Store
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
@@ -87,7 +84,7 @@ class StoreReviewCommentList(generics.ListAPIView):  # 해당가게 대댓글 �
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):  # 댓글 수정
-    # permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review.objects.all()
     serializer_class = serializers.ReviewSerializer
 
@@ -107,7 +104,7 @@ class ReviewComment(generics.ListCreateAPIView):  # 사장님 답글
 
 
 class ReviewCommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = models.Review_comment.objects.all()
     serializer_class = serializers.ReviewCommentSerializer
 
@@ -187,3 +184,25 @@ class StoreImageView(APIView):
             return Response(arr, status=status.HTTP_201_CREATED)
         else:
             return Response(arr, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MyStoreImage(generics.ListAPIView):  # 해당가게 이미지 리스트
+    queryset = models.Store_file.objects.all()
+    serializer_class = serializers.StoreFileSerializer
+    lookup_url_kwarg = 's_id'
+
+    def get_queryset(self):
+        s_id = self.kwargs.get(self.lookup_url_kwarg)  # api 요청시 value 값 받음 - /review/store/<value>
+        images = models.Store_file.objects.filter(s_id=s_id)
+        return images
+
+
+class MyReviewImage(generics.ListAPIView):  # 해당가게 이미지 리스트
+    queryset = models.Review_file.objects.all()
+    serializer_class = serializers.ReviewFileSerializer
+    lookup_url_kwarg = 'r_id'
+
+    def get_queryset(self):
+        r_id = self.kwargs.get(self.lookup_url_kwarg)  # api 요청시 value 값 받음 - /review/store/<value>
+        images = models.Review_file.objects.filter(r_id=r_id)
+        return images

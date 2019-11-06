@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('review/store/<int:s_id>', views.StoreReviewList.as_view()),  # 해당가게의 댓글
     path('review-comment/store/<int:s_id>', views.StoreReviewCommentList.as_view()),  # 해당가게의 대댓글
+    path('mystore-file/<int:s_id>', views.MyStoreImage.as_view()),   # 해당 가게 사진 GET
+    path('myreview-file/<int:r_id>', views.MyReviewImage.as_view()),  # 해당 가게 리뷰 사진 GET
 
     path('review-file/', views.ReviewFile.as_view()),
     path('review-file/<int:pk>', views.ReviewFileDetail.as_view(), name='review_file-detail'),
