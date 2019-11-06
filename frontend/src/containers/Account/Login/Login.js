@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Login.css'
-
+import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons"
 
 class Login extends Component {
   state = {
@@ -33,7 +33,11 @@ class Login extends Component {
           <br />
           <button type="submit">로그인 </button>
         </form>
-        <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button>
+        <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button><br />
+        <div className='SocialLogin'>
+          <FacebookLoginButton onClick={()=> alert("Facebook social login")}/>
+          <GoogleLoginButton onClick={()=> alert("Google social login")}/>
+        </div>
       </div>
     );
   }
