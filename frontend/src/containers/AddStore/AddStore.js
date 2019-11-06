@@ -14,11 +14,12 @@ class AddStore extends Component {
     });
   };
 
-  handleImageChange = e => {
-    this.setState({
-      image: e.target.files[0]
-    })
+  test = (e) => {
+    e.preventDefault()
+    var ifiles = document.getElementById('image_first_input').files
+    this.props.handle_addstore(e, this.state, ifiles)
   }
+
 
   render() {
     return (
@@ -26,7 +27,7 @@ class AddStore extends Component {
         가게 추가
         <form encType="multipart/form-data" onSubmit={
           (e) => {
-            this.props.handle_addstore(e, this.state)
+            this.test(e)
           }} >
           <label>
             게시물 제목 :
@@ -52,11 +53,11 @@ class AddStore extends Component {
             가게 이미지 :
             <input
               ref="file"
-              id="image"
+              id="image_first_input"
               accept="image/*"
               type="file"
-              name="image"
-              onChange={this.handleImageChange}
+              name="image_first_input"
+              multiple
             />
           </label>
           <br />

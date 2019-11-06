@@ -7,10 +7,23 @@ import FormData from 'form-data'
 class DetailStore extends Component {
   state = {
     store: [], //받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
-    imageChange: false
+    imageChange: false,
+    storeImg : [],
   }
 
   componentDidMount() {
+    axios.get(`http://127.0.0.1:8000/mystore-file/${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      console.log(res)
+      this.setState({
+        storeImg : res.data
+      })
+      console.log(this.state.storeImg)
+    })
+    .catch(e => console.log(e))
     axios.get(`http://127.0.0.1:8000/store/${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -134,7 +147,13 @@ class DetailStore extends Component {
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img style={{ width: 200, height: 200 }} src={this.state.store.image} alt='가게 사진' />
+          <div className='storeImg'>
+            {this.state.storeImg &&
+              this.state.storeImg.map((simg) =>
+                <img style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진'/>
+              )
+            }
+          </div>
           <p>가게 이름 : {this.state.store.store_name}</p>
           <p>가게 게시물 제목 : {this.state.store.title}</p>
           <p>가게 내용 : {this.state.store.content}</p>
@@ -148,7 +167,13 @@ class DetailStore extends Component {
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img style={{ width: 200, height: 200 }} src={this.state.store.image} alt='가게 사진' />
+          <div className='storeImg'>
+            {this.state.storeImg &&
+              this.state.storeImg.map((simg) =>
+                <img style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진'/>
+              )
+            }
+          </div>
           <button onClick={this.handle_change_storeImg}>사진 바꾸기</button>
           {this.state.imageChange &&
             <form onSubmit={e => this.edit_store_image(e)}>

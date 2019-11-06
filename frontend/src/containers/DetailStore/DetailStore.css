@@ -16,3 +16,7 @@
   height: max-content;
   display: block;
 }
+
+.storeImg{
+  display: inline;
+}

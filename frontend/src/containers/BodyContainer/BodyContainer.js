@@ -10,25 +10,41 @@ import FormData from 'form-data'
 class BodyContainer extends Component {
 
 
-  handle_addstore = (e, data) => {
+  handle_addstore = (e, data, files) => {
     e.preventDefault()
 
     var formData = new FormData();
-    formData.append('u_id',localStorage.getItem('user_id'))
-    formData.append('store_name',data.storeName)
-    formData.append('business_number',data.businessNumber)
-    formData.append('title',data.title)
-    formData.append('content',data.storeIntroduce)
-    formData.append('image',data.image)
-    axios.post('http://127.0.0.1:8000/store/', formData , {
+    formData.append('u_id', localStorage.getItem('user_id'))
+    formData.append('store_name', data.storeName)
+    formData.append('business_number', data.businessNumber)
+    formData.append('title', data.title)
+    formData.append('content', data.storeIntroduce)
+    axios.post('http://127.0.0.1:8000/store/', formData, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
+      var formImgData = new FormData();
+      formImgData.append('s_id', res.data.id)
+      for (let i = 0; i < files.length; i++) {
+        formImgData.append('image', files[i])
+      }
+      axios.post(`http://127.0.0.1:8000/store-file/`, formImgData, {
+        headers: {
+          Authorization: `jwt ${localStorage.getItem('token')}`
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(e => console.log(e))
+
       this.props.display_form('home')
     }).catch(e => {
       console.log(e)
     })
+
+
   }
 
   handle_deletestore = (e, store_id) => {
@@ -37,12 +53,12 @@ class BodyContainer extends Component {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     })
-    .then(res => {
-      this.props.display_form('profile')
-    })
-    .catch(e => {
-      alert('자신의 가게만 삭제 가능합니다')
-    })
+      .then(res => {
+        this.props.display_form('profile')
+      })
+      .catch(e => {
+        alert('자신의 가게만 삭제 가능합니다')
+      })
   }
 
 
