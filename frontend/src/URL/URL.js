@@ -31,11 +31,10 @@ export default {
   token_auth,
   currentuser,
   signup,
+  re_review,
 
-  
+  //안쓰는거
   login,
   logout,
   userlist,
-  
-  re_review
 };
