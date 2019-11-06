@@ -54,7 +54,7 @@ class Review(models.Model):
     comment = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     star_score = models.IntegerField('별점', default=1, validators=[MinValueValidator(1),
-                                                                  MaxValueValidator(5)])
+                                                                   MaxValueValidator(5)])
 
     def __str__(self):
         return str(self.s_id)
@@ -62,8 +62,8 @@ class Review(models.Model):
 
 class Review_file(models.Model):
     r_id = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
-    #filename = models.CharField(max_length=100, null=True)
-    #original_name = models.CharField(max_length=100, null=True)
+    # filename = models.CharField(max_length=100, null=True)
+    # original_name = models.CharField(max_length=100, null=True)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):

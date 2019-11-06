@@ -197,7 +197,12 @@ class MyStoreImage(generics.ListAPIView):  # 해당가게 이미지 리스트
         return images
 
 
-class MyReviewImage(generics.ListAPIView):  # 해당가게 이미지 리스트
+class MyStoreImageDetail(generics.RetrieveUpdateDestroyAPIView):  # 해당가게 이미지디테일
+    queryset = models.Store_file.objects.all()
+    serializer_class = serializers.StoreFileSerializer
+
+
+class MyReviewImage(generics.ListAPIView):  # 해당 리뷰 리스트
     queryset = models.Review_file.objects.all()
     serializer_class = serializers.ReviewFileSerializer
     lookup_url_kwarg = 'r_id'
