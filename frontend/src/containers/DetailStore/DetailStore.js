@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import ReviewContainer from '../ReviewContainer/ReviewContainer'
 import './DetailStore.css'
 import axios from 'axios'
+import FormData from 'form-data'
 
 class DetailStore extends Component {
   state = {
-    store: []//받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
+    store: [], //받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
+    imageChange: false
   }
 
   componentDidMount() {
@@ -48,6 +50,12 @@ class DetailStore extends Component {
     });
   };
 
+  handleImageChange = e => {
+    this.setState({
+      image: e.target.files[0]
+    })
+  }
+
   storeEdit = () => {
     var store_info = document.getElementById("store_info")
     var edit_store_info = document.getElementById("edit_store_info")
@@ -89,13 +97,44 @@ class DetailStore extends Component {
       .catch(e => console.log(e))
   }
 
+  handle_change_storeImg = () => {
+    this.setState({
+      imageChange: !this.state.imageChange
+    })
+  }
+
+  edit_store_image = (e) => {
+    var files = document.getElementById("image_input").files
+    e.preventDefault()
+    var formData = new FormData();
+    for(let i = 0 ; i < files.length; i ++){
+      formData.append('image', files[i])
+    }
+    formData.append('s_id',this.props.store_id)
+    // formData.append('store_name',this.state.store.store_name)
+    // formData.append('business_number',this.state.store.business_number)
+    // formData.append('title',this.state.store.title)
+    // formData.append('content',this.state.store.content)
+    // formData.append('image', this.state.image)
+    axios.post(`http://127.0.0.1:8000/store-file/`, formData, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => {
+        this.handle_change_storeImg()
+        this.handle_get_store()
+      })
+      .catch(e => console.log(e))
+  }
+
   render() {
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img style={{width:200 ,height:200}} src={this.state.store.image} alt='가게 사진' />
+          <img style={{ width: 200, height: 200 }} src={this.state.store.image} alt='가게 사진' />
           <p>가게 이름 : {this.state.store.store_name}</p>
           <p>가게 게시물 제목 : {this.state.store.title}</p>
           <p>가게 내용 : {this.state.store.content}</p>
@@ -109,8 +148,20 @@ class DetailStore extends Component {
         <div className='DetailStore'>
           가게 번호{this.props.store_id}
           <br />
-          <img style={{width:200 ,height:200}} src={this.state.store.image} alt='가게 사진' />
-          <button>사진 바꾸기</button>
+          <img style={{ width: 200, height: 200 }} src={this.state.store.image} alt='가게 사진' />
+          <button onClick={this.handle_change_storeImg}>사진 바꾸기</button>
+          {this.state.imageChange &&
+            <form onSubmit={e => this.edit_store_image(e)}>
+              <input
+                ref="file"
+                id="image_input"
+                accept="image/*"
+                type="file"
+                name="image"
+                multiple
+              />
+              <button type='submit'>바꾸기</button>
+            </form>}
           <div id='store_info'>
             <p>가게 이름 : {this.state.store.store_name}</p>
             <p>사업자 번호 : {this.state.store.business_number}</p>
