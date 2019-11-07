@@ -29,6 +29,7 @@ urlpatterns = [
     path('review-files/', views.ImageView.as_view()),
     path('store-file/', views.StoreImageView.as_view()),
 
+    path('oauth/', views.oauth),
 ]
 
 urlpatterns += [
