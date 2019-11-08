@@ -11,20 +11,26 @@ from .models import User, Store, Review, Review_comment, \
 
 class MyRegistrationSerializer(RegisterSerializer):
     Business = serializers.BooleanField(required=False)
+    user_type = serializers.CharField(required=False, max_length=30)
 
     def custom_signup(self, request, user):
+        print('check')
+        _user_type = self.validated_data.get('user_type')
+        u = User.objects.get(username=user.username)
+        if _user_type == 'kakao':
+            u.user_type = 2
+        elif _user_type == 'facebook':
+            u.user_type = 3
+        elif _user_type == 'naver':
+            u.user_type = 4
+        else:
+            u.user_type = 1
         if self.validated_data.get('Business'):
-            u = User.objects.get(username=user.username)
             u.role_profile = 1
-            # business_group = Group.objects.get(name='business')
-            # business_group.user_set.add(u)
             u.is_staff = True
             u.save()
         else:
-            u = User.objects.get(username=user.username)
             u.role_profile = 2
-            # customer_group = Group.objects.get(name='customer')
-            # customer_group.user_set.add(u)
             u.save()
 
 

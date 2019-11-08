@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Login.css'
-import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons"
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons"
 // import logo from '../../../image/kakao_account_login_btn_medium_narrow.png'
 import axios from "axios";
 import KakaoLogin from 'react-kakao-login'
@@ -29,15 +29,42 @@ class Login extends Component {
     })
   }
 
-  responseKakao = res => {
-    console.log(res)
+  responseKakao = (res) => {
+    var data = {}
+    data['id'] = `${res.profile.properties.nickname}@${res.profile.id}`
+    data['password'] = 'asdqwe123!'
+    data['password_check'] = 'asdqwe123!'
+    data['email'] = res.profile.kakao_account.email
+    data['type'] = false
+    data['user_type'] = 'kakao'
+
+    // data.id
+    var user_list
+    axios.get('http://127.0.0.1:8000/user/')
+      .then(res => {
+        user_list = res.data
+        var login_data = {}
+        login_data['id'] = data.id
+        login_data['password'] = data.password
+        var check = false
+        for (let i = 0; i < user_list.length; i++) {
+          if (data.id === user_list[i].username) {
+            check = true
+          }
+        }
+        if (check) {
+          this.props.handle_login(false, login_data)
+        } else {
+          this.props.handle_signup(false, data)
+        }
+      })
+      .catch(e => console.log(e))
   }
 
   responseFail = e => {
     console.log(e)
   }
 
-  
   render() {
     return (
       <div className='Login'>
@@ -57,15 +84,14 @@ class Login extends Component {
         </form>
         <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button><br />
         <div className='SocialLogin'>
-          <KakaoLogin 
+          <KakaoLogin
             jsKey='08cb3651eda5236b400da6a4bb2d1e9f'
-            buttonText='Kakao'
             onSuccess={this.responseKakao}
             onFailure={this.responseFail}
             getProfile="true"
           />
-          <FacebookLoginButton onClick={()=> this.handle_KakaoLogin}/>
-          <GoogleLoginButton onClick={()=> alert("Google social login")}/>
+          <FacebookLoginButton onClick={() => this.handle_KakaoLogin} />
+          <GoogleLoginButton onClick={() => alert("Google social login")} />
         </div>
       </div>
     );

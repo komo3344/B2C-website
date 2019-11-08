@@ -11,8 +11,8 @@ class MyUserAdmin(UserAdmin):
         (None, {'fields': ('role_profile', 'user_type')}),
     )
 
-    list_display = ('username', 'email', 'user_type', 'role_profile', 'is_staff')
-    readonly_fields = ['username', 'email', 'role_profile', 'user_type']
+    list_display = ('username', 'email', 'user_type', 'role_profile', 'is_staff', 'user_type',)
+    # readonly_fields = ['username', 'email', 'role_profile', 'user_type']
 
 
 class StoreAdmin(admin.ModelAdmin):

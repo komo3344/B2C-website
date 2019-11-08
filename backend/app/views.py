@@ -13,6 +13,7 @@ from django.http import JsonResponse
 
 
 class UserList(generics.ListCreateAPIView):
+    permission_classes = []
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
 
@@ -215,39 +216,39 @@ class MyReviewImage(generics.ListAPIView):  # 해당 리뷰 리스트
         return images
 
 def oauth(request):
-    # 사용자 요청->카카오api->code발급
-    code = request.GET.get('code')
-    client_id = '63e4734e72d2d421ef9d5ff9200a241f'
-    redirect_uri = 'http://127.0.0.1:8000/oauth/'
-
-    print('code : ', code)
-
-    # 발급받은 code를 통해 access token 발급
-    data = {
-        'grant_type': 'authorization_code',
-        'client_id': client_id,
-        'redirect_uri': redirect_uri,
-        'code': code
-    }
-    response = requests.post('https://kauth.kakao.com/oauth/token', data=data)
-    response_json = response.json()
-    print('json', response_json)
-
-    # access token을 이용하여 사용자 정보받기
-    headers = {
-        'Authorization': 'Bearer {}'.format(response_json['access_token']),
-    }
-    response2 = requests.get('https://kapi.kakao.com/v2/user/me', headers=headers)
-    response2_json = response2.json()
-
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-    print(response2_json)
-    nickName = str(response2_json['properties']['nickname']) + str('#' + str(response2_json['id']))
-    if not models.User.objects.filter(username=nickName):
-        models.User.objects.create_user(nickName)
-    # u = AbstractUser(username=str(response2_json['properties']['nickname']) + str('#' + str(response2_json['id'])))
-    # u.set_password('')
-    # u.is_staff = False
-    # u.save()
-
-    return redirect('http://localhost:3000/main')
+    # # 사용자 요청->카카오api->code발급
+    # code = request.GET.get('code')
+    # client_id = '63e4734e72d2d421ef9d5ff9200a241f'
+    # redirect_uri = 'http://127.0.0.1:8000/oauth/'
+    #
+    # print('code : ', code)
+    #
+    # # 발급받은 code를 통해 access token 발급
+    # data = {
+    #     'grant_type': 'authorization_code',
+    #     'client_id': client_id,
+    #     'redirect_uri': redirect_uri,
+    #     'code': code
+    # }
+    # response = requests.post('https://kauth.kakao.com/oauth/token', data=data)
+    # response_json = response.json()
+    # print('json', response_json)
+    #
+    # # access token을 이용하여 사용자 정보받기
+    # headers = {
+    #     'Authorization': 'Bearer {}'.format(response_json['access_token']),
+    # }
+    # response2 = requests.get('https://kapi.kakao.com/v2/user/me', headers=headers)
+    # response2_json = response2.json()
+    #
+    # print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    # print(response2_json)
+    # nickName = str(response2_json['properties']['nickname']) + str('#' + str(response2_json['id']))
+    # if not models.User.objects.filter(username=nickName):
+    #     models.User.objects.create_user(nickName)
+    # # u = AbstractUser(username=str(response2_json['properties']['nickname']) + str('#' + str(response2_json['id'])))
+    # # u.set_password('')
+    # # u.is_staff = False
+    # # u.save()
+    print(request)
+    return redirect(to='http://localhost:3000/main')

@@ -19,7 +19,10 @@ class AuthPage extends Component {
   }
 
   handle_login = (e, data) => {
-    e.preventDefault()
+    if (e){
+      e.preventDefault()
+    }
+    console.log(data)
     axios.post(URL.token_auth,{
       username: data.id,
       password: data.password
@@ -27,26 +30,37 @@ class AuthPage extends Component {
     .then(res => {
       localStorage.setItem('token', res.data.token)
       this.handle_login_check()
-    }
-    )
+    })
+    .catch(e => console.log(e))
   }
 
   handle_signup = (e, data) => {
+    console.log(data)
+    if (e){
+      e.preventDefault()
+    }
     var type
     if(data.type === 'true'){
       type = true
     } else type = false
-    e.preventDefault()
     axios.post(URL.signup,{
       username: data.id,
       password1: data.password,
       password2: data.password_check,
       email: data.email,
-      Business: type
+      Business: type,
+      user_type: data.user_type
     })
     .then(res => {
+      if(data.user_type !== undefined){
+        var login_data = {}
+        login_data['id'] = data.id
+        login_data['password'] = data.password
+        this.handle_login(false, login_data)
+      }
       this.display_form('login')
     })
+    .catch(e => console.log(e))
   }
 
 
@@ -60,7 +74,7 @@ class AuthPage extends Component {
     let form;
     switch (this.state.displayed_form) {
       case 'login':
-        form = <Login display_form={this.display_form} handle_login={this.handle_login} />;
+        form = <Login display_form={this.display_form} handle_login={this.handle_login} handle_signup={this.handle_signup}/>;
         break;
       case 'signup':
         form = <Signup handle_signup={this.handle_signup} />;
