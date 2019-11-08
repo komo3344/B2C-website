@@ -26,7 +26,6 @@ class AuthPage extends Component {
     })
     .then(res => {
       localStorage.setItem('token', res.data.token)
-      localStorage.setItem('type', 'B')
       this.handle_login_check()
     }
     )

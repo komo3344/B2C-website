@@ -8,7 +8,7 @@ import URL from '../../URL/URL'
 
 class MainPage extends Component {
   state = {
-    type: localStorage.getItem('type'), // type 은 AuthPage에서 저장
+    type: '로그인중', // type 은 AuthPage에서 저장
     displayed_form: 'home',
     username: '',
   }
@@ -48,7 +48,7 @@ class MainPage extends Component {
           this.setState({
             username: res.data[0].username
           })
-          localStorage.setItem('user_id',res.data[0].id)
+          localStorage.setItem('user_id', res.data[0].id)
         }
       ).catch(e => console.log(e))
     }
@@ -77,6 +77,13 @@ class MainPage extends Component {
           <div className='container'>
             <BodyContainer2 type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form} />
           </div>
+        </div>
+      )
+    }
+    else if (this.state.type === '로그인중') {
+      return (
+        <div>
+          <h1>로그인 중입니다</h1>
         </div>
       )
     }
