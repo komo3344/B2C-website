@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import './Login.css'
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons"
 import axios from "axios";
 import KakaoLogin from 'react-kakao-login'
 import NaverLogin from 'react-naver-login';
+import FacebookLogin from 'react-facebook-login';
 
 
 class Login extends Component {
@@ -95,6 +95,42 @@ class Login extends Component {
       .catch(e => console.log(e))
   }
 
+  responseFacebook = (res) => {
+    console.log(res)
+    var data = {}
+    data['id'] = `${res.name}@${res.id}`
+    data['password'] = 'asdqwe123!'
+    data['password_check'] = 'asdqwe123!'
+    data['email'] = res.email
+    data['type'] = false
+    data['user_type'] = 'facebook'
+    console.log('페이스북 res 데이터', data)
+    var user_list=[]
+    axios.get('http://127.0.0.1:8000/user/')
+      .then(res => {
+        user_list = res.data
+        var login_data = {}
+        login_data['id'] = data.id
+        login_data['password'] = data.password
+        console.log('페이스북 로그인 데이터', login_data)
+        var check = false
+        for (let i = 0; i < user_list.length; i++) {
+          if (data.id === user_list[i].username) {
+            console.log(user_list[i].username)
+            check = true
+          }
+        }
+        if (check) {
+          console.log('if ', check)
+          this.props.handle_login(false, login_data)
+          
+        } else {
+          console.log('else', check)
+          this.props.handle_signup(false, data)
+        }
+      })
+      .catch(e => console.log(e))
+  }
   responseFail = e => {
     alert('로그인 실패')
     console.log(e)
@@ -123,13 +159,19 @@ class Login extends Component {
           <div id="naver_id_login"></div>
 
           <KakaoLogin
-            jsKey='08cb3651eda5236b400da6a4bb2d1e9f'
+          //beb75fde754395b36f4da5bafb79237a
+          //08cb3651eda5236b400da6a4bb2d1e9f
+            jsKey='beb75fde754395b36f4da5bafb79237a'
             onSuccess={this.responseKakao}
             onFailure={this.responseFail}
             getProfile="true"
-          />
-          <FacebookLoginButton onClick={() => this.handle_KakaoLogin} />
-          <GoogleLoginButton onClick={() => alert("Google social login")} />
+          /><br />
+          <FacebookLogin
+            appId="2430121853753479"
+            autoLoad={false}
+            fields="name,email"
+            callback={this.responseFacebook}
+          />          
           <NaverLogin
             clientId="zd77osJ0K94OH8504tNu"
             callbackUrl="http://127.0.0.1:3000/auth"
