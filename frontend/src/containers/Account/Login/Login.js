@@ -4,7 +4,8 @@ import axios from "axios";
 import KakaoLogin from 'react-kakao-login'
 import NaverLogin from 'react-naver-login';
 import FacebookLogin from 'react-facebook-login';
-
+import kakaoLoginButton from '../../../image/kakao_account_login_btn_medium_narrow.png'
+import naverLoginButton from '../../../image/naver_login.PNG'
 
 class Login extends Component {
   state = {
@@ -19,16 +20,6 @@ class Login extends Component {
       return newState;
     });
   };
-
-  handle_KakaoLogin = () => {
-    var host = 'https://kauth.kakao.com'
-    var client_id = '63e4734e72d2d421ef9d5ff9200a241f'
-    var redirect_uri = 'http://127.0.0.1:8000/oauth/'
-    var url = `${host}/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code`
-    axios.get(url).then(res => {
-      window.open(res.config.url)
-    })
-  }
 
   responseNaver = (res) => {
     var data = {}
@@ -96,7 +87,6 @@ class Login extends Component {
   }
 
   responseFacebook = (res) => {
-    console.log(res)
     var data = {}
     data['id'] = `${res.name}@${res.id}`
     data['password'] = 'asdqwe123!'
@@ -104,7 +94,7 @@ class Login extends Component {
     data['email'] = res.email
     data['type'] = false
     data['user_type'] = 'facebook'
-    console.log('페이스북 res 데이터', data)
+    
     var user_list=[]
     axios.get('http://127.0.0.1:8000/user/')
       .then(res => {
@@ -112,30 +102,27 @@ class Login extends Component {
         var login_data = {}
         login_data['id'] = data.id
         login_data['password'] = data.password
-        console.log('페이스북 로그인 데이터', login_data)
         var check = false
         for (let i = 0; i < user_list.length; i++) {
           if (data.id === user_list[i].username) {
-            console.log(user_list[i].username)
             check = true
           }
         }
         if (check) {
-          console.log('if ', check)
           this.props.handle_login(false, login_data)
           
         } else {
-          console.log('else', check)
           this.props.handle_signup(false, data)
         }
       })
       .catch(e => console.log(e))
   }
+
   responseFail = e => {
     alert('로그인 실패')
     console.log(e)
   }
-
+  
   render() {
 
     return (
@@ -156,26 +143,35 @@ class Login extends Component {
         </form>
         <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button><br />
         <div className='SocialLogin'>
-          <div id="naver_id_login"></div>
-
+          
           <KakaoLogin
           //beb75fde754395b36f4da5bafb79237a
           //08cb3651eda5236b400da6a4bb2d1e9f
             jsKey='beb75fde754395b36f4da5bafb79237a'
+            render={(props) => 
+              <div>
+                <img width='23.5%' height='65px' src ={kakaoLoginButton} onClick={props.onClick} alt='KAKAO LOGIN BUTTON'/>
+              </div>
+              }
             onSuccess={this.responseKakao}
             onFailure={this.responseFail}
             getProfile="true"
-          /><br />
+          /><br /><br />
+
           <FacebookLogin
             appId="2430121853753479"
             autoLoad={false}
             fields="name,email"
             callback={this.responseFacebook}
-          />          
+          />
+          
           <NaverLogin
             clientId="zd77osJ0K94OH8504tNu"
             callbackUrl="http://127.0.0.1:3000/auth"
-            render={(props) => <div onClick={props.onClick}>Naver Login</div>}
+            render={(props) => 
+            <div>
+              <img width='23.5%' height='65px' src ={naverLoginButton} onClick={props.onClick} alt='NAVER LOGIN BUTTON'/>
+            </div>}
             onSuccess={(naverUser) => {this.responseNaver(naverUser)}}
             onFailure={(e) => console.error(e)}
           />
