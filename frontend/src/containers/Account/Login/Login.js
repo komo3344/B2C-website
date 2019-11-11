@@ -4,6 +4,7 @@ import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-butto
 // import logo from '../../../image/kakao_account_login_btn_medium_narrow.png'
 import axios from "axios";
 import KakaoLogin from 'react-kakao-login'
+import NaverLogin from 'react-naver-login';
 
 class Login extends Component {
   state = {
@@ -27,6 +28,40 @@ class Login extends Component {
     axios.get(url).then(res => {
       window.open(res.config.url)
     })
+  }
+
+  responseNaver = (res) => {
+    console.log(res)
+    var data = {}
+    var id_name = res.email
+    var rex_id_name = id_name.split('@')
+    data['id'] = `${rex_id_name[0]}@${res.id}`
+    data['password'] = 'asdqwe123!'
+    data['password_check'] = 'asdqwe123!'
+    data['email'] = res.email
+    data['type'] = false
+    data['user_type'] = 'naver'
+
+    var user_list
+    axios.get('http://127.0.0.1:8000/user/')
+      .then(res => {
+        user_list = res.data
+        var login_data = {}
+        login_data['id'] = data.id
+        login_data['password'] = data.password
+        var check = false
+        for (let i = 0; i < user_list.length; i++) {
+          if (data.id === user_list[i].username) {
+            check = true
+          }
+        }
+        if (check) {
+          this.props.handle_login(false, login_data)
+        } else {
+          this.props.handle_signup(false, data)
+        }
+      })
+      .catch(e => console.log(e))
   }
 
   responseKakao = (res) => {
@@ -66,6 +101,7 @@ class Login extends Component {
   }
 
   render() {
+
     return (
       <div className='Login'>
         <h1>로그인</h1>
@@ -84,6 +120,8 @@ class Login extends Component {
         </form>
         <button onClick={() => { this.props.display_form('signup') }}> 회원가입 </button><br />
         <div className='SocialLogin'>
+          <div id="naver_id_login"></div>
+
           <KakaoLogin
             jsKey='08cb3651eda5236b400da6a4bb2d1e9f'
             onSuccess={this.responseKakao}
@@ -92,6 +130,13 @@ class Login extends Component {
           />
           <FacebookLoginButton onClick={() => this.handle_KakaoLogin} />
           <GoogleLoginButton onClick={() => alert("Google social login")} />
+          <NaverLogin
+            clientId="zd77osJ0K94OH8504tNu"
+            callbackUrl="http://127.0.0.1:3000/auth"
+            render={(props) => <div onClick={props.onClick}>Naver Login</div>}
+            onSuccess={(naverUser) => {this.responseNaver(naverUser)}}
+            onFailure={(e) => console.error(e)}
+          />
         </div>
       </div>
     );

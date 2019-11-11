@@ -35,7 +35,6 @@ class AuthPage extends Component {
   }
 
   handle_signup = (e, data) => {
-    console.log(data)
     if (e){
       e.preventDefault()
     }
@@ -86,7 +85,7 @@ class AuthPage extends Component {
       <div>
         {this.state.login_check ?
           (
-            <Redirect to="/main" test={'asd'} />
+            <Redirect to="/main"/>
           ) :
           (
             <div>
