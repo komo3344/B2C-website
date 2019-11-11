@@ -8,7 +8,7 @@ import URL from '../../URL/URL'
 
 class MainPage extends Component {
   state = {
-    type: '로그인중', // type 은 AuthPage에서 저장
+    type: '로그인중', 
     displayed_form: 'home',
     username: '',
   }

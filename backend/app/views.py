@@ -18,6 +18,16 @@ class UserList(generics.ListCreateAPIView):
     serializer_class = serializers.UserSerializer
 
 
+class TagList(generics.ListCreateAPIView):
+    queryset = models.HashTag.objects.all()
+    serializer_class = serializers.TagSerializer
+
+
+class TagDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.HashTag.objects.all()
+    serializer_class = serializers.TagSerializer
+
+
 class CurrentUser(generics.ListCreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer

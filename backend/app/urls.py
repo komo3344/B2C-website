@@ -30,6 +30,9 @@ urlpatterns = [
     path('store-file/', views.StoreImageView.as_view()),
 
     path('oauth/', views.oauth),
+
+    path('tag/', views.TagList.as_view()),
+    path('tag/<int:pk>', views.TagDetail.as_view(), name='hashtag-detail')
 ]
 
 urlpatterns += [

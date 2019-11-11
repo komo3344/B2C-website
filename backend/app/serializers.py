@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 
 from .models import User, Store, Review, Review_comment, \
-    Review_file, Store_file
+    Review_file, Store_file, HashTag, StoreTags
 
 
 class MyRegistrationSerializer(RegisterSerializer):
@@ -41,8 +41,7 @@ class MyRegistrationView(RegisterView):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'role_profile',
-                  'user_type', 'email')
+        fields = ('url', 'username','email','user_type',)
 
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -94,3 +93,9 @@ class StoreFileSerializer(serializers.ModelSerializer):
         model = Store_file
         fields = ('id', 's_id', 'image'
                   )
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HashTag
+        fields = ('url','id','tag_title',)
