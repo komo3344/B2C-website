@@ -22,7 +22,6 @@ class AuthPage extends Component {
     if (e){
       e.preventDefault()
     }
-    console.log(data)
     axios.post(URL.token_auth,{
       username: data.id,
       password: data.password

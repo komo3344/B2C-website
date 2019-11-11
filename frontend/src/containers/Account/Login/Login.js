@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './Login.css'
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons"
-// import logo from '../../../image/kakao_account_login_btn_medium_narrow.png'
 import axios from "axios";
 import KakaoLogin from 'react-kakao-login'
 import NaverLogin from 'react-naver-login';
+
 
 class Login extends Component {
   state = {
@@ -31,7 +31,6 @@ class Login extends Component {
   }
 
   responseNaver = (res) => {
-    console.log(res)
     var data = {}
     var id_name = res.email
     var rex_id_name = id_name.split('@')
@@ -97,6 +96,7 @@ class Login extends Component {
   }
 
   responseFail = e => {
+    alert('로그인 실패')
     console.log(e)
   }
 

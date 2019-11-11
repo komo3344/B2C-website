@@ -33,12 +33,6 @@ class BodyContainer2 extends Component {
       localStorage.removeItem('user_id');
       return (
         <div>
-          <helmet>
-            <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-            <script>
-              Kakao.Auth.logout()
-            </script>
-          </helmet>
           <Redirect to='/auth' />
         </div>
       )
