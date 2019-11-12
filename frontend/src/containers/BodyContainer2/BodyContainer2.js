@@ -3,6 +3,7 @@ import Body from '../Body/Body'
 import ProfileContainer from '../ProfileContainer/ProfileContainer'
 import { Redirect } from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
+// import Axios from "axios";
 
 class BodyContainer2 extends Component {
 
@@ -31,6 +32,18 @@ class BodyContainer2 extends Component {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       localStorage.removeItem('user_id');
+      
+      // console.log(localStorage.getItem('kakao_token'))
+      // console.log(this.props.username.split('@')[1])
+      // Axios.post(`https://kapi.kakao.com/v1/user/logout`,{
+      //   Authorization : `Bearer ${localStorage.getItem('kakao_token')}`,
+      // }).then(res => {
+      //   console.log(res)
+      // })
+      // .catch(e => {
+      //   console.log(e)
+      // })
+      // localStorage.removeItem('kakao_token');
       return (
         <div>
           <Redirect to='/auth' />

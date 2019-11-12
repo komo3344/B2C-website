@@ -9,20 +9,35 @@ class DetailStore extends Component {
   state = {
     store: [], //받아온 store_id 로 가게 data 전달받아서 출력 후에 유저 id도 받아서 ReviewContainer로 전달해야함
     imageChange: false,
-    storeImg : [],
+    storeImg: [],
+    tags: [],
   }
 
   componentDidMount() {
+    axios.get(`${URL.mystoreTag}${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.setState({
+          tags: [...this.state.tags,
+          res.data[i]
+          ]
+        })
+      }
+    })
+
     axios.get(`${URL.mystorefile}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
       this.setState({
-        storeImg : res.data
+        storeImg: res.data
       })
     })
-    .catch(e => console.log(e))
+      .catch(e => console.log(e))
     axios.get(`${URL.storelist}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -44,7 +59,7 @@ class DetailStore extends Component {
       }
     }).then(res => {
       this.setState({
-        storeImg : res.data
+        storeImg: res.data
       })
     })
     axios.get(`${URL.storelist}${this.props.store_id}`, {
@@ -134,21 +149,21 @@ class DetailStore extends Component {
     })
       .then(res => {
         pre_img = res.data
-        for(let i = 0 ; i < pre_img.length ; i++){
+        for (let i = 0; i < pre_img.length; i++) {
           axios.delete(`${URL.mystorefile}${this.props.store_id}/${pre_img[i].id}`, {
             headers: {
               Authorization: `jwt ${localStorage.getItem('token')}`
             }
           })
-          .catch(e => {console.log(e)})
+            .catch(e => { console.log(e) })
         }
       }).catch(e => console.log(e))
     var files = document.getElementById("image_input").files
     var formData = new FormData();
-    for(let i = 0 ; i < files.length; i ++){
+    for (let i = 0; i < files.length; i++) {
       formData.append('image', files[i])
     }
-    formData.append('s_id',this.props.store_id)
+    formData.append('s_id', this.props.store_id)
     axios.post(`${URL.storefile}`, formData, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -162,6 +177,10 @@ class DetailStore extends Component {
   }
 
   render() {
+    console.log(this.state.tags)
+    var tag_list = this.state.tags.map((t) => 
+        <a key={t.t_id} href="#">{t.get_tag_title}</a>
+    )
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
@@ -170,7 +189,7 @@ class DetailStore extends Component {
           <div className='storeImg'>
             {this.state.storeImg &&
               this.state.storeImg.map((simg) =>
-                <img style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진'/>
+                <img key={simg.id} style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진' />
               )
             }
           </div>
@@ -179,6 +198,7 @@ class DetailStore extends Component {
           <p>가게 내용 : {this.state.store.content}</p>
           <p>가게 댓글 수 : {this.state.store.reviews_count}</p>
           <p>가게 평점 : {this.state.store.average_star_score}</p>
+          <p>태그 : {tag_list}</p>
           <ReviewContainer Review={this.state.Review} type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>
       );
@@ -190,7 +210,7 @@ class DetailStore extends Component {
           <div className='storeImg'>
             {this.state.storeImg &&
               this.state.storeImg.map((simg) =>
-                <img style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진'/>
+                <img key={simg.id} style={{ width: 200, height: 200 }} src={simg.image} alt='가게 사진' />
               )
             }
           </div>

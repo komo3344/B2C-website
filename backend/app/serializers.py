@@ -41,7 +41,7 @@ class MyRegistrationView(RegisterView):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username','email','user_type',)
+        fields = ('__all__')
 
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -98,4 +98,16 @@ class StoreFileSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = HashTag
-        fields = ('url','id','tag_title',)
+        fields = ('url', 'id', 'tag_title',)
+
+
+class StoreTagSerializer(serializers.ModelSerializer):
+    get_tag_title = serializers.SerializerMethodField('get_tag_title_f')
+
+    def get_tag_title_f(self, obj):
+        tag_title = HashTag.objects.get(id=obj.t_id.id)
+        return tag_title.tag_title
+
+    class Meta:
+        model = StoreTags
+        fields = ('s_id', 't_id', 'get_tag_title')

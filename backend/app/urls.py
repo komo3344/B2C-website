@@ -32,7 +32,8 @@ urlpatterns = [
     path('oauth/', views.oauth),
 
     path('tag/', views.TagList.as_view()),
-    path('tag/<int:pk>', views.TagDetail.as_view(), name='hashtag-detail')
+    path('tag/<int:pk>', views.TagDetail.as_view(), name='hashtag-detail'),
+    path('mystore-tag/<int:s_id>', views.MyStoreTag.as_view())
 ]
 
 urlpatterns += [

@@ -11,6 +11,9 @@ class AuthPage extends Component {
     displayed_form: 'login'
   }
 
+  componentWillUnmount(){
+  }
+
   handle_login_check = () => {
     this.setState({
       login_check: true

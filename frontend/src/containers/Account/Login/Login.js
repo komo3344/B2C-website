@@ -55,6 +55,7 @@ class Login extends Component {
   }
 
   responseKakao = (res) => {
+    console.log(res)
     var data = {}
     data['id'] = `${res.profile.properties.nickname}@${res.profile.id}`
     data['password'] = 'asdqwe123!'
@@ -62,8 +63,8 @@ class Login extends Component {
     data['email'] = res.profile.kakao_account.email
     data['type'] = false
     data['user_type'] = 'kakao'
-
-    // data.id
+    localStorage.setItem('kakao_token',res.response.access_token)
+    console.log(localStorage.getItem('kakao_token'))
     var user_list
     axios.get('http://127.0.0.1:8000/user/')
       .then(res => {

@@ -9,7 +9,7 @@ const token_refresh =  'http://127.0.0.1:8000/api-token-refresh/'
 const token_auth =     'http://127.0.0.1:8000/api-token-auth/'
 const currentuser =  'http://127.0.0.1:8000/current-user/'
 const signup =    'http://127.0.0.1:8000/rest-auth/registration/signup/';
-
+const mystoreTag = 'http://127.0.0.1:8000/mystore-tag/';
 
 const login =     'http://127.0.0.1:8000/rest-auth/login/';
 const logout =    'http://127.0.0.1:8000/rest-auth/logout/';
@@ -32,7 +32,7 @@ export default {
   currentuser,
   signup,
   re_review,
-
+  mystoreTag,
   //안쓰는거
   login,
   logout,

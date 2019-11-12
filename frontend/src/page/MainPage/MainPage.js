@@ -41,6 +41,7 @@ class MainPage extends Component {
             })
           }
           else {
+            console.log(res)
             this.setState({
               type: 'A'
             })
@@ -75,7 +76,7 @@ class MainPage extends Component {
             <Header username={this.state.username} type={this.state.type} display_form={this.display_form} />
           </div>
           <div className='container'>
-            <BodyContainer2 type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form} />
+            <BodyContainer2 type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form} username={this.state.username}/>
           </div>
         </div>
       )

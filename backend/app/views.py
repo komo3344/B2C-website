@@ -28,6 +28,17 @@ class TagDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TagSerializer
 
 
+class MyStoreTag(generics.ListAPIView):
+    queryset = models.StoreTags.objects.all()
+    serializer_class = serializers.StoreTagSerializer
+    lookup_url_kwarg = 's_id'
+
+    def get_queryset(self):
+        s_id = self.kwargs.get(self.lookup_url_kwarg)
+        tag = models.StoreTags.objects.filter(s_id=s_id)
+        return tag
+
+
 class CurrentUser(generics.ListCreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
