@@ -39,6 +39,21 @@ class MyStoreTag(generics.ListAPIView):
         return tag
 
 
+class TaggingStore(generics.ListAPIView):
+    queryset = models.Store.objects.all()
+    serializer_class = serializers.StoreSerializer
+    lookup_url_kwarg = 'pk'
+
+    def get_queryset(self):
+        t_id = self.kwargs.get(self.lookup_url_kwarg)
+        tag = models.StoreTags.objects.filter(t_id=t_id)
+        store_list =[]
+        for t in tag:
+            s = models.Store.objects.get(store_name=t.s_id)
+            store_list.append(s)
+        return store_list
+
+
 class CurrentUser(generics.ListCreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer

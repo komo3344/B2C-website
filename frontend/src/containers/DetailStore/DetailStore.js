@@ -179,7 +179,7 @@ class DetailStore extends Component {
   render() {
     console.log(this.state.tags)
     var tag_list = this.state.tags.map((t) => 
-        <a key={t.t_id} href="#">{t.get_tag_title}</a>
+        <button key={t.t_id} >{t.get_tag_title}</button>
     )
     if (this.props.type === 'C') {
       return (

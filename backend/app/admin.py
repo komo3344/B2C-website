@@ -88,7 +88,7 @@ class ReviewFileAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('tag_title',)
+    list_display = ('tag_title', 'id')
 
 
 class StoreTagAdmin(admin.ModelAdmin):
