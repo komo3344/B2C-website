@@ -14,3 +14,5 @@ backend/.idea/vcs.xml
 backend/.idea/inspectionProfiles/profiles_settings.xml
 backend/media/
 backend/app/migrations/0003_auto_20191105_1735.py
+backend/app/migrations/0004_hashtag_storetags.py
+backend/app/migrations/0005_storetags_u_id.py
