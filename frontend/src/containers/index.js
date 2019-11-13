@@ -7,6 +7,7 @@ import ProfileContainer from './ProfileContainer/ProfileContainer'
 import AddStore from './AddStore/AddStore'
 import DetailStore from './DetailStore/DetailStore'
 import ReviewContainer from './ReviewContainer/ReviewContainer'
+import TagContainer from './TagContainer/TagContainer'
 
 export {
     Signup,
@@ -17,5 +18,6 @@ export {
     ProfileContainer,
     AddStore,
     DetailStore,
-    ReviewContainer
+    ReviewContainer,
+    TagContainer,
 };

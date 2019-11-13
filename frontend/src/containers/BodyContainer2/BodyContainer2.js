@@ -3,6 +3,7 @@ import Body from '../Body/Body'
 import ProfileContainer from '../ProfileContainer/ProfileContainer'
 import { Redirect } from 'react-router-dom'
 import DetailStore from "../DetailStore/DetailStore";
+import TagContainer from "../TagContainer/TagContainer";
 // import Axios from "axios";
 
 class BodyContainer2 extends Component {
@@ -52,7 +53,20 @@ class BodyContainer2 extends Component {
     }
     else if (this.props.displayed_form === 'store') {
       return (
-        <DetailStore type={this.props.type} store_id={this.props.store_id} handle_review={this.handle_review} check={this.check} />
+        <DetailStore 
+          type={this.props.type} 
+          store_id={this.props.store_id} 
+          handle_review={this.handle_review} 
+          check={this.check} 
+          display_form={this.props.display_form}
+          trans_tag_id={this.props.trans_tag_id}
+        />
+      )
+    }
+
+    else if(this.props.displayed_form === 'tag') {
+      return(
+        <TagContainer t_id={this.props.t_id} display_form={this.props.display_form}/>
       )
     }
     else {

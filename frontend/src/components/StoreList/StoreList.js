@@ -6,7 +6,7 @@ const StoreList = (props) => {
   const data = props.data
   return (
     <div>
-      <Store type={props.type} data={data} display_form={props.display_form}/>
+      <Store data={data} display_form={props.display_form}/>
     </div>
   );
 }

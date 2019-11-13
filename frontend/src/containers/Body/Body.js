@@ -41,7 +41,7 @@ class Body extends Component {
       return (
         <div className='box'>
           <div className='store'>
-          <StoreList type={this.props.type} data={this.state.store} display_form={this.props.display_form}/>
+          <StoreList data={this.state.store} display_form={this.props.display_form}/>
           </div>
           <div className='info'>
             <button onClick={() => this.props.display_form('addstore')}>가게 등록하기</button>

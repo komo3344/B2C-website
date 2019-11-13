@@ -1,19 +1,21 @@
-const storelist = 'http://127.0.0.1:8000/store/';
-const storefile = 'http://127.0.0.1:8000/store-file/';
+const storelist =     'http://127.0.0.1:8000/store/';
+const storefile =     'http://127.0.0.1:8000/store-file/';
 const mystorefile =   'http://127.0.0.1:8000/mystore-file/';
-const mystore = 'http://127.0.0.1:8000/mystore/';
-const review =    'http://127.0.0.1:8000/review/';
+const mystore =       'http://127.0.0.1:8000/mystore/';
+const review =        'http://127.0.0.1:8000/review/';
 const reviewfile =    'http://127.0.0.1:8000/review-file/';
-const re_review = 'http://127.0.0.1:8000/review-comment/';
-const token_refresh =  'http://127.0.0.1:8000/api-token-refresh/'
-const token_auth =     'http://127.0.0.1:8000/api-token-auth/'
-const currentuser =  'http://127.0.0.1:8000/current-user/'
-const signup =    'http://127.0.0.1:8000/rest-auth/registration/signup/';
-const mystoreTag = 'http://127.0.0.1:8000/mystore-tag/';
+const re_review =     'http://127.0.0.1:8000/review-comment/';
+const token_refresh = 'http://127.0.0.1:8000/api-token-refresh/'
+const token_auth =    'http://127.0.0.1:8000/api-token-auth/'
+const currentuser =   'http://127.0.0.1:8000/current-user/'
+const signup =        'http://127.0.0.1:8000/rest-auth/registration/signup/';
+const mystoreTag =    'http://127.0.0.1:8000/mystore-tag/';
+const tagging =       'http://127.0.0.1:8000/tagging-store/';
+const tag =           'http://127.0.0.1:8000/tag/';
 
-const login =     'http://127.0.0.1:8000/rest-auth/login/';
-const logout =    'http://127.0.0.1:8000/rest-auth/logout/';
-const userlist =  'http://127.0.0.1:8000/user/';
+const login =         'http://127.0.0.1:8000/rest-auth/login/';
+const logout =        'http://127.0.0.1:8000/rest-auth/logout/';
+const userlist =      'http://127.0.0.1:8000/user/';
 
 
 
@@ -33,6 +35,8 @@ export default {
   signup,
   re_review,
   mystoreTag,
+  tagging,
+  tag,
   //안쓰는거
   login,
   logout,

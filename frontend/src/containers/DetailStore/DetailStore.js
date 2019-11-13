@@ -52,6 +52,11 @@ class DetailStore extends Component {
       })
   }
 
+  handle_tagging = (t_id) => {
+    this.props.trans_tag_id(t_id)
+    this.props.display_form('tag')
+  }
+
   handle_get_store = () => {
     axios.get(`${URL.mystorefile}${this.props.store_id}`, {
       headers: {
@@ -177,9 +182,8 @@ class DetailStore extends Component {
   }
 
   render() {
-    console.log(this.state.tags)
     var tag_list = this.state.tags.map((t) => 
-        <button key={t.t_id} >{t.get_tag_title}</button>
+        <button onClick={() => {this.handle_tagging(t.t_id)}} key={t.t_id} >{t.get_tag_title}</button>
     )
     if (this.props.type === 'C') {
       return (

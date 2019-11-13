@@ -13,6 +13,12 @@ class MainPage extends Component {
     username: '',
   }
 
+  trans_tag_id = (data) => {
+    this.setState({
+      t_id : data
+    })
+  }
+
   display_form = (form, id) => { //화면 출력 폼 변경 함수
     this.setState({
       displayed_form: form,
@@ -76,7 +82,15 @@ class MainPage extends Component {
             <Header username={this.state.username} type={this.state.type} display_form={this.display_form} />
           </div>
           <div className='container'>
-            <BodyContainer2 type={this.state.type} store_id={this.state.store_id} displayed_form={this.state.displayed_form} display_form={this.display_form} username={this.state.username}/>
+            <BodyContainer2 
+              type={this.state.type}
+              store_id={this.state.store_id} 
+              t_id={this.state.t_id}
+              displayed_form={this.state.displayed_form} 
+              display_form={this.display_form} 
+              username={this.state.username}
+              trans_tag_id={this.trans_tag_id}
+            />
           </div>
         </div>
       )
