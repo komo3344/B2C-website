@@ -10,6 +10,7 @@ class TagContainer extends Component {
     length: null,
     tag_name: '',
   }
+
   componentDidMount(){
     Axios.get(`${URL.tagging}${this.props.t_id}`, { //해당 태그가 걸려있는 store list get
       headers: {
@@ -28,8 +29,7 @@ class TagContainer extends Component {
         Authorization: `jwt ${localStorage.getItem('token')}`
       }
     }).then(res => {
-      console.log(res)
-      this.setState({
+        this.setState({
         tag_name : res.data.tag_title
       })
     })

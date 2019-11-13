@@ -88,11 +88,11 @@ class ReviewFileAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('tag_title', 'id')
+    list_display = ('tag_title', 'id',)
 
 
 class StoreTagAdmin(admin.ModelAdmin):
-    list_display = ('s_id','t_id')
+    list_display = ('s_id','t_id', 'u_id')
 
 
 admin.site.register(User, MyUserAdmin)

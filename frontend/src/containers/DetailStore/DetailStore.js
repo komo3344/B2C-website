@@ -3,6 +3,7 @@ import ReviewContainer from '../ReviewContainer/ReviewContainer'
 import './DetailStore.css'
 import axios from 'axios'
 import FormData from 'form-data'
+import $ from "jquery";
 import URL from '../../URL/URL'
 
 class DetailStore extends Component {
@@ -11,9 +12,21 @@ class DetailStore extends Component {
     imageChange: false,
     storeImg: [],
     tags: [],
+    u: [],
+    tagList: [],
   }
 
   componentDidMount() {
+    axios.get(`${URL.tag}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      this.setState({
+        tagList: res.data
+      })
+    })
+      .catch(e => console.log(e))
     axios.get(`${URL.mystoreTag}${this.props.store_id}`, {
       headers: {
         Authorization: `jwt ${localStorage.getItem('token')}`
@@ -21,10 +34,22 @@ class DetailStore extends Component {
     }).then(res => {
       for (let i = 0; i < res.data.length; i++) {
         this.setState({
-          tags: [...this.state.tags,
-          res.data[i]
-          ]
+          tags: [...this.state.tags, res.data[i]],
+          u: [...this.state.u, res.data[i].u_id]
         })
+      }
+      const user_id = localStorage.getItem('user_id')
+      for (var i = 0; i < this.state.u.length; i++) { //사용자가 태그를 붙였는지 확인
+        if (user_id === String(this.state.u[i])) {
+          this.setState({
+            _using_tag: true
+          })
+          break
+        } else {
+          this.setState({
+            _using_tag: false
+          })
+        }
       }
     })
 
@@ -181,10 +206,64 @@ class DetailStore extends Component {
       .catch(e => console.log(e))
   }
 
+  submit_tag = (e) => {
+    var taged = $('input:radio[name="tag"]:checked').val();
+    e.preventDefault()
+    axios.post(`${URL.storetagList}`,{
+      s_id: this.props.store_id,
+      t_id: taged,
+      u_id: localStorage.getItem('user_id')
+    } ,{
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    })
+      .then(res => {
+        $("span").remove("#tag");
+        this.get_tag_list()
+      })
+      .catch(e => console.log(e))
+    this.setState({
+      _using_tag: true
+    })
+  }
+
+  get_tag_list = () => {
+    axios.get(`${URL.mystoreTag}${this.props.store_id}`, {
+      headers: {
+        Authorization: `jwt ${localStorage.getItem('token')}`
+      }
+    }).then(res => {
+      for (let i = 0; i < res.data.length; i++) {
+        this.setState({
+          tags: [...this.state.tags, res.data[i]],
+          u: [...this.state.u, res.data[i].u_id]
+        })
+      }
+      const user_id = localStorage.getItem('user_id')
+      for (var i = 0; i < this.state.u.length; i++) { //사용자가 태그를 붙였는지 확인
+        if (user_id === String(this.state.u[i])) {
+          this.setState({
+            _using_tag: true
+          })
+          break
+        } else {
+          this.setState({
+            _using_tag: false
+          })
+        }
+      }
+    })
+  }
+
   render() {
-    var tag_list = this.state.tags.map((t) => 
-        <button onClick={() => {this.handle_tagging(t.t_id)}} key={t.t_id} >{t.get_tag_title}</button>
+    
+    var tag_list = this.state.tags.map((t) =>
+      <span id='tag'>
+        <button onClick={() => { this.handle_tagging(t.t_id) }} key={t.t_id} >{t.get_tag_title}</button>
+      </span>
     )
+
     if (this.props.type === 'C') {
       return (
         <div className='DetailStore'>
@@ -203,6 +282,16 @@ class DetailStore extends Component {
           <p>가게 댓글 수 : {this.state.store.reviews_count}</p>
           <p>가게 평점 : {this.state.store.average_star_score}</p>
           <p>태그 : {tag_list}</p>
+          {!this.state._using_tag &&
+            <form onSubmit={(e) => { this.submit_tag(e) }}>
+              {this.state.tagList.map((tag) =>
+                <span>
+                  <input key={tag.id} type='radio' name='tag' value={tag.id} />{tag.tag_title}
+                </span>
+              )}
+              <button type='submit'>태그 달기</button>
+            </form>
+          }
           <ReviewContainer Review={this.state.Review} type={this.props.type} store_id={this.props.store_id} /> {/*추후에 user_id 값도 넘긴다*/}
         </div>
       );

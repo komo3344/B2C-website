@@ -110,4 +110,4 @@ class StoreTagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StoreTags
-        fields = ('s_id', 't_id', 'get_tag_title')
+        fields = ('s_id', 't_id', 'u_id', 'get_tag_title')

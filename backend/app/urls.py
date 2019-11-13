@@ -34,7 +34,8 @@ urlpatterns = [
     path('tag/', views.TagList.as_view()),
     path('tag/<int:pk>', views.TagDetail.as_view(), name='hashtag-detail'),
     path('tagging-store/<int:pk>', views.TaggingStore.as_view()),
-    path('mystore-tag/<int:s_id>', views.MyStoreTag.as_view())
+    path('mystore-tag/<int:s_id>', views.MyStoreTag.as_view()),
+    path('StoreTags/',views.StoreTagList.as_view()),
 ]
 
 urlpatterns += [

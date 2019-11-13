@@ -12,6 +12,7 @@ const signup =        'http://127.0.0.1:8000/rest-auth/registration/signup/';
 const mystoreTag =    'http://127.0.0.1:8000/mystore-tag/';
 const tagging =       'http://127.0.0.1:8000/tagging-store/';
 const tag =           'http://127.0.0.1:8000/tag/';
+const storetagList =  'http://127.0.0.1:8000/StoreTags/'
 
 const login =         'http://127.0.0.1:8000/rest-auth/login/';
 const logout =        'http://127.0.0.1:8000/rest-auth/logout/';
@@ -37,6 +38,7 @@ export default {
   mystoreTag,
   tagging,
   tag,
+  storetagList,
   //안쓰는거
   login,
   logout,

@@ -54,6 +54,11 @@ class TaggingStore(generics.ListAPIView):
         return store_list
 
 
+class StoreTagList(generics.ListCreateAPIView):
+    queryset = models.StoreTags.objects.all()
+    serializer_class = serializers.StoreTagSerializer
+
+
 class CurrentUser(generics.ListCreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer

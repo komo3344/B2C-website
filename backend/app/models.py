@@ -84,8 +84,12 @@ class Review_comment(models.Model):
 class HashTag(models.Model):
     tag_title = models.CharField(max_length=30)
 
+    def __str__(self):
+        return str(self.tag_title)
+
 
 class StoreTags(models.Model):
+    u_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     s_id = models.ForeignKey(Store, on_delete=models.CASCADE, null=True)
     t_id = models.ForeignKey(HashTag, on_delete=models.CASCADE, null=True)
 
