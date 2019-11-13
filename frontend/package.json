@@ -36,9 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "http://komo3344.github.io/frontend",
-  "devDependencies": {
-    "gh-pages": "^2.1.1"
   }
 }
