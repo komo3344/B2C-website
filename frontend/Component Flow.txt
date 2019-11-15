@@ -25,6 +25,8 @@ BodyContainer & BodyContainer2 display_form(home) -> Body.js & Nav
 
 BodyContainer & BodyContainer2 display_form(store) -> DetailStore.js
 
+BodyContainer2 display_form(tag) -> TagContainer.js -> StoreList.js
+
 DetailStore.js -> ReviewContainer.js -> Review.js
 
 Body.js -> StoreList.js & info - B type -> display_form(addstore) -> AddStore.js
